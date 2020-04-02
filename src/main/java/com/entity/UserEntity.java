@@ -76,4 +76,14 @@ public class UserEntity {
         this.userRole = userRole;
     }
 
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", enabled=" + enabled +
+                ", userRole=" + userRole +
+                '}';
+    }
 }

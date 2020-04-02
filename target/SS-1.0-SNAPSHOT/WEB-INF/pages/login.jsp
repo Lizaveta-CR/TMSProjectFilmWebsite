@@ -74,8 +74,8 @@
                 <td><input type='password' name='password'/></td>
             </tr>
             <tr>
-                <td colspan='2'><input name="<spring:message code="lbl.submit"/>" type="submit"
-                                       value="submit"/></td>
+                <td colspan='2'><input name="submit" type="submit"
+                                       value="<spring:message code="lbl.submit"/>"/></td>
             </tr>
             <a href="/forgotPass"><spring:message code="lbl.forgotPass"/></a>
         </table>

@@ -2,6 +2,8 @@ package com.repository;
 
 import com.entity.UserEntity;
 import com.entity.UserRole;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class UserRepositoryImpl implements UserRepository {
-
+    private static final Logger logger = LogManager.getLogger(UserRepositoryImpl.class);
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -55,11 +57,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void save(UserEntity user) {
         getSession().persist(user);
+        logger.info("User was successfully saved. User details = " + user);
     }
 
     @Override
     public void save(UserRole role) {
         getSession().persist(role);
     }
-
 }

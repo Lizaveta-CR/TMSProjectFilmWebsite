@@ -1,7 +1,10 @@
 package com.validator;
 
 import com.entity.UserEntity;
+import com.service.SecurityServiceImpl;
 import com.service.UserService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

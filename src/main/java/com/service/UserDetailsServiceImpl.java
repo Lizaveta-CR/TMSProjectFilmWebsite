@@ -2,6 +2,8 @@ package com.service;
 
 import com.entity.*;
 import com.repository.UserRepository;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,6 +21,7 @@ import java.util.Set;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
+    private static final Logger logger = LogManager.getLogger(SecurityServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -29,9 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         UserEntity user = userRepository.findByUserName(username);
         List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
-
         return buildUserForAuthentication(user, authorities);
-
     }
 
     private User buildUserForAuthentication(UserEntity user, List<GrantedAuthority> authorities) {

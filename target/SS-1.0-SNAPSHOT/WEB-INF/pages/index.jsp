@@ -31,7 +31,7 @@
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">
     <h2>
-        User : ${pageContext.request.userPrincipal.name} | <a
+        <spring:message code="lbl.welcome"/>, ${pageContext.request.userPrincipal.name} | <a
             href="javascript:formSubmit()"> <spring:message code="lbl.logout"/></a>
     </h2>
     </c:if>

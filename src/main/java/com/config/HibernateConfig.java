@@ -1,5 +1,7 @@
 package com.config;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -18,6 +20,7 @@ import java.util.Properties;
 @PropertySource(value = {"classpath:application.properties"})
 @Import({SecurityConfig.class})
 public class HibernateConfig {
+    private static final Logger logger = LogManager.getLogger(HibernateConfig.class);
     @Autowired
     private Environment environment;
 
@@ -27,6 +30,7 @@ public class HibernateConfig {
         factoryBean.setDataSource(dataSource());
         factoryBean.setPackagesToScan(new String[]{"com.entity"});
         factoryBean.setHibernateProperties(hibernateProperties());
+        logger.info("Creating Session Factory is done");
         return factoryBean;
     }
 
