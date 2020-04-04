@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="security"
-          uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
@@ -36,5 +35,8 @@
     </h2>
     </c:if>
     </security:authorize>
+            <security:authorize access="hasRole('ROLE_ADMIN')">
+               <a href="/admin"><spring:message code="lbl.adminButton"/>
+            </security:authorize>
 </body>
 </html>

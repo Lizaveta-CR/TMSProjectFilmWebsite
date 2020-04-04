@@ -1,10 +1,7 @@
 package com.validator;
 
 import com.entity.UserEntity;
-import com.service.SecurityServiceImpl;
 import com.service.UserService;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -45,14 +42,15 @@ public class UserValidator implements Validator {
             errors.rejectValue("password", "Size.userForm.password");
         }
         if (userService.findByMobile(user.getMobile()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.mobile");
+            errors.rejectValue("mobile", "Duplicate.userForm.mobile");
         }
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mobile", "NotEmpty");
 
         if (!containsDigits(user.getMobile())) {
             errors.rejectValue("mobile", "Mobile.only.digits");
         }
         if (user.getMobile().length() < 5 || user.getMobile().length() > 10) {
-            errors.rejectValue("password", "Size.userForm.mobile");
+            errors.rejectValue("mobile", "Size.userForm.mobile");
         }
     }
 

@@ -2,7 +2,7 @@ CREATE TABLE users
 (
     username VARCHAR(45) NOT NULL,
     password VARCHAR(60) NOT NULL,
-    mobile   VARCHAR(30)     NOT NULL,
+    mobile   VARCHAR(30) NOT NULL,
     enabled  TINYINT     NOT NULL DEFAULT 1,
     PRIMARY KEY (username)
 );
@@ -16,6 +16,18 @@ CREATE TABLE user_roles
     UNIQUE KEY uni_username_role (role, username),
     KEY fk_username_idx (username),
     CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users (username)
+);
+
+CREATE TABLE films
+(
+    film_id     int(11)     NOT NULL AUTO_INCREMENT,
+    name        varchar(60) NOT NULL,
+    year        varchar(10) NOT NULL,
+    quality     varchar(30) NOT NULL,
+    translation varchar(40) NOT NULL,
+    continuance varchar(30) NOT NULL,
+    date        varchar(20) NOT NULL,
+    PRIMARY KEY (film_id)
 );
 
 INSERT INTO users(username, password, mobile, enabled)
@@ -33,3 +45,5 @@ VALUES ('alex', 'ROLE_USER');
 # drop table user_roles
 
 # drop table users
+
+# drop table films
