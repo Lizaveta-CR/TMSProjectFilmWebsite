@@ -30,6 +30,28 @@ CREATE TABLE films
     PRIMARY KEY (film_id)
 );
 
+CREATE table orders
+(
+    order_id  int(11)     NOT NULL AUTO_INCREMENT,
+    username  varchar(45) NOT NULL,
+    order_num int(11)     NOT NULL,
+    PRIMARY KEY (order_id),
+    UNIQUE KEY uni_username_order (order_num, username),
+    KEY fk_username_idx_order (username),
+    CONSTRAINT fk_username_order FOREIGN KEY (username) REFERENCES users (username)
+);
+
+CREATE TABLE order_item
+(
+    order_item_id int(11) NOT NULL AUTO_INCREMENT,
+    price         int(11) NOT NULL,
+    order_id      int(11) NOT NULL,
+    film_id       int(11) NOT NULL,
+    PRIMARY KEY (order_item_id),
+    CONSTRAINT order_detail_ord_fk FOREIGN KEY (order_id) REFERENCES orders (order_id),
+    CONSTRAINT order_detail_film_fk FOREIGN KEY (film_id) REFERENCES films (film_id)
+);
+
 INSERT INTO users(username, password, mobile, enabled)
 VALUES ('liza', '1234', '1234567890', true);
 INSERT INTO users(username, password, mobile, enabled)
@@ -47,3 +69,5 @@ VALUES ('alex', 'ROLE_USER');
 # drop table users
 
 # drop table films
+
+# drop table orders

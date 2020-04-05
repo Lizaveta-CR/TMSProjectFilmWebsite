@@ -17,10 +17,10 @@ public class AdminController {
     @Autowired
     FilmService filmService;
 
-    @GetMapping("/parse")
+    @GetMapping("/getFilmsFromSite")
     public String getReloadPage(@RequestParam String filmNum) throws Exception {
         List<Film> parse = filmService.parse(Integer.parseInt(filmNum));
         filmService.saveFilms(parse);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 }

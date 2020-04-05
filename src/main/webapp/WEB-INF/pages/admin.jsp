@@ -26,7 +26,7 @@
             href="javascript:formSubmit()"> <spring:message code="lbl.logout"/></a>
     </h2>
 </c:if>
-<form name='parsePage' action='/parse' method='GET'>
+<form action="/admin/getFilmsFromSite" method="GET">
     <label for="filmNum"><spring:message code="lbl.numberOfFilms"/>(1-5):</label>
     <input type="number" id="filmNum" name="filmNum" min="1" max="5">
     <input name="submit" type="submit" value="<spring:message code="lbl.parsePage"/>"/>

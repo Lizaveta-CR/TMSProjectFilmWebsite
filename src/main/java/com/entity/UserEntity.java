@@ -1,7 +1,9 @@
 package com.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,6 +15,7 @@ public class UserEntity {
     private String mobile;
     private boolean enabled;
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
+    private List<OrderEntity> orders = new ArrayList<>();
 
     public UserEntity() {
     }
@@ -76,6 +79,15 @@ public class UserEntity {
         this.userRole = userRole;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    public List<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
@@ -84,6 +96,7 @@ public class UserEntity {
                 ", mobile='" + mobile + '\'' +
                 ", enabled=" + enabled +
                 ", userRole=" + userRole +
+                ", orders=" + orders +
                 '}';
     }
 }

@@ -2,100 +2,94 @@ package com.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "films")
 public class FilmEntity implements Serializable {
-    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long film_id;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "year")
     private String year;
-
-    @Column(name = "quality")
     private String quality;
-
-    @Column(name = "translation")
     private String translation;
-
-    @Column(name = "continuance")
     private String continuance;
-    @Column(name = "date")
     private String date;
+    private List<OrderItem> orderItemList = new ArrayList<>();
 
     public FilmEntity() {
+    }
+
+    @Id
+    public long getFilm_id() {
+        return film_id;
+    }
+
+    public void setFilm_id(long film_id) {
+        this.film_id = film_id;
+    }
+
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    @Column(name = "year")
+    public String getYear() {
+        return year;
+    }
+
     public void setYear(String year) {
         this.year = year;
+    }
+
+    @Column(name = "quality")
+    public String getQuality() {
+        return quality;
     }
 
     public void setQuality(String quality) {
         this.quality = quality;
     }
 
+    @Column(name = "translation")
+    public String getTranslation() {
+        return translation;
+    }
+
     public void setTranslation(String translation) {
         this.translation = translation;
+    }
+
+    @Column(name = "continuance")
+    public String getContinuance() {
+        return continuance;
     }
 
     public void setContinuance(String continuance) {
         this.continuance = continuance;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Long getId() {
-        return film_id;
-    }
-
-    public void setId(Long id) {
-        this.film_id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public String getQuality() {
-        return quality;
-    }
-
-    public String getTranslation() {
-        return translation;
-    }
-
-    public String getContinuance() {
-        return continuance;
-    }
-
+    @Column(name = "date")
     public String getDate() {
         return date;
     }
 
-    @Override
-    public String toString() {
-        return "FilmEntity{" +
-                "id=" + film_id +
-                ", name='" + name + '\'' +
-                ", year='" + year + '\'' +
-                ", quality='" + quality + '\'' +
-                ", translation='" + translation + '\'' +
-                ", continuance='" + continuance + '\'' +
-                ", date='" + date + '\'' +
-                '}';
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+
+    public List<OrderItem> getOrderItemList() {
+        return orderItemList;
+    }
+
+    public void setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
     }
 }

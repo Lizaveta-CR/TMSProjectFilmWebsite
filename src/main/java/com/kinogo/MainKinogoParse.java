@@ -1,8 +1,5 @@
 package com.kinogo;
 
-import com.service.SecurityServiceImpl;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
