@@ -8,16 +8,16 @@
 <head>
     <title>Shop Page</title>
 </head>
-<a href="/?lang=en">English</a> || <a href="/?lang=ru">Русский</a>
-<h1><security:authorize access="isAnonymous()"><spring:message code="lbl.helloTitle"/></security:authorize></h1>
+<security:authorize access="isAnonymous()">
+    <a href="${pageContext.request.contextPath}/?lang=en">English</a>&nbsp;&nbsp;&nbsp;
+    <a href="${pageContext.request.contextPath}/?lang=ru">Русский</a>&nbsp;&nbsp;&nbsp;
+    <h1><spring:message code="lbl.helloTitle"/></h1>
+    <a href="/login"><spring:message code="lbl.helloLogin"/></a><a href="/registration"><spring:message
+        code="lbl.helloRegister"/></a>
+</security:authorize>
 
-<security:authorize access="isAnonymous()"><a href="/login"><spring:message code="lbl.helloLogin"/><a
-        href="/registration">
-        <spring:message code="lbl.helloRegister"/>
-    </security:authorize>
-
-    <security:authorize access="hasRole('ROLE_USER')">
-        <c:url value="/logout" var="logoutUrl"/>
+<security:authorize access="hasRole('ROLE_USER')">
+    <c:url value="/logout" var="logoutUrl"/>
     <form action="${logoutUrl}" method="post" id="logoutForm">
         <input type="hidden" name="${_csrf.parameterName}"
                value="${_csrf.token}"/>
@@ -29,16 +29,16 @@
     </script>
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">
-    <h2>
-        <spring:message code="lbl.welcome"/>, ${pageContext.request.userPrincipal.name} | <a
-            href="javascript:formSubmit()"> <spring:message code="lbl.logout"/></a>
-    </h2>
+        <h2>
+            <spring:message code="lbl.welcome"/>, ${pageContext.request.userPrincipal.name} | <a
+                href="javascript:formSubmit()"> <spring:message code="lbl.logout"/></a>
+        </h2>
     </c:if>
     <a href="/getAllFilmsFromStore"> <spring:message code="lbl.getFilmsFromStore"/></a>
+</security:authorize>
+<security:authorize access="hasRole('ROLE_ADMIN')">
+<a href="/admin">
+        <spring:message code="lbl.adminButton"/>
     </security:authorize>
-    <security:authorize access="hasRole('ROLE_ADMIN')">
-    <a href="/admin">
-            <spring:message code="lbl.adminButton"/>
-        </security:authorize>
 </body>
 </html>
