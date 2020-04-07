@@ -31,5 +31,6 @@
     <input type="number" id="filmNum" name="filmNum" min="1" max="5">
     <input name="submit" type="submit" value="<spring:message code="lbl.parsePage"/>"/>
 </form>
+<a href="/"><spring:message code="lbl.exit"/></a>
 </body>
 </html>

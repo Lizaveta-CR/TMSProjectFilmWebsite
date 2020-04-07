@@ -70,4 +70,4 @@ VALUES ('alex', 'ROLE_USER');
 
 # drop table films
 
-# drop table orders
+# drop table order_item

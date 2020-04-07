@@ -34,9 +34,11 @@
             href="javascript:formSubmit()"> <spring:message code="lbl.logout"/></a>
     </h2>
     </c:if>
+    <a href="/getAllFilmsFromStore"> <spring:message code="lbl.getFilmsFromStore"/></a>
     </security:authorize>
-            <security:authorize access="hasRole('ROLE_ADMIN')">
-               <a href="/admin"><spring:message code="lbl.adminButton"/>
-            </security:authorize>
+    <security:authorize access="hasRole('ROLE_ADMIN')">
+    <a href="/admin">
+            <spring:message code="lbl.adminButton"/>
+        </security:authorize>
 </body>
 </html>

@@ -78,10 +78,10 @@
                                        value="<spring:message code="lbl.submit"/>"/></td>
             </tr>
             <a href="/forgotPass"><spring:message code="lbl.forgotPass"/></a>
+            <a href="/registration"><spring:message code="lbl.helloRegister"/>
         </table>
         <input type="hidden" name="${_csrf.parameterName}"
                value="${_csrf.token}"/>
-
     </form>
 </div>
 
