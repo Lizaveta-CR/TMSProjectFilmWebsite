@@ -27,6 +27,7 @@ CREATE TABLE films
     translation varchar(40) NOT NULL,
     continuance varchar(30) NOT NULL,
     date        varchar(20) NOT NULL,
+    price       varchar(10) NOT NULL,
     PRIMARY KEY (film_id)
 );
 
@@ -43,13 +44,14 @@ CREATE table orders
 
 CREATE TABLE order_item
 (
-    order_item_id int(11) NOT NULL AUTO_INCREMENT,
-    price         int(11) NOT NULL,
-    order_id      int(11) NOT NULL,
-    film_id       int(11) NOT NULL,
-    PRIMARY KEY (order_item_id),
-    CONSTRAINT order_detail_ord_fk FOREIGN KEY (order_id) REFERENCES orders (order_id),
-    CONSTRAINT order_detail_film_fk FOREIGN KEY (film_id) REFERENCES films (film_id)
+    order_id int(11) NOT NULL,
+    film_id  int(11) NOT NULL,
+    PRIMARY KEY (order_id, film_id),
+    KEY film_id (film_id),
+    CONSTRAINT order_film_ibfk_1
+        FOREIGN KEY (order_id) REFERENCES orders (order_id),
+    CONSTRAINT order_film_ibfk_2
+        FOREIGN KEY (film_id) REFERENCES films (film_id)
 );
 
 INSERT INTO users(username, password, mobile, enabled)
@@ -63,6 +65,7 @@ INSERT INTO user_roles (username, role)
 VALUES ('liza', 'ROLE_ADMIN');
 INSERT INTO user_roles (username, role)
 VALUES ('alex', 'ROLE_USER');
+
 
 # drop table user_roles
 

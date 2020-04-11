@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class FilmEntityServiceImpl implements FilmEntityService {
@@ -23,24 +24,34 @@ public class FilmEntityServiceImpl implements FilmEntityService {
     }
 
     @Override
-    public void saveFilms(List<Film> films) throws Exception {
+    public void saveFilms(List<Film> films, String language) throws Exception {
         for (Film film : films) {
-            mapper.toDto(filmEntityRepository.saveFilms(mapper.toEntity(film)));
+            mapper.toDto(filmEntityRepository.saveFilms(mapper.toEntity(film), language));
         }
     }
 
     @Override
-    public List<FilmEntity> getAll() {
-        return filmEntityRepository.getAll();
+    public PaginationResult<FilmEntity> getAll(int page, int maxResult, int maxNavigationPage) {
+        return filmEntityRepository.getAll(page, maxResult, maxNavigationPage);
     }
 
-    @Override
-    public PaginationResult<FilmEntity> queryFilms(int page, int maxResult, int maxNavigationPage) {
-        return filmEntityRepository.queryFilms(page, maxResult, maxNavigationPage);
-    }
+//    @Override
+//    public List<FilmEntity> getAll() {
+//        return filmEntityRepository.getAll();
+//    }
 
     @Override
-    public PaginationResult<FilmEntity> queryFilms(int page, int maxResult, int maxNavigationPage, String likeName) {
-        return filmEntityRepository.queryFilms(page, maxResult, maxNavigationPage, likeName);
+    public FilmEntity getFilmById(long id) {
+        return filmEntityRepository.getFilmById(id);
+    }
+
+//    @Override
+//    public void update(FilmEntity film) {
+//        filmEntityRepository.update(film);
+//    }
+
+    @Override
+    public void delete(long id) {
+        filmEntityRepository.delete(id);
     }
 }

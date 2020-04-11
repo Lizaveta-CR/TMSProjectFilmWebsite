@@ -2,53 +2,43 @@ package com.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
-@Entity
-@Table(name = "order_item")
+@Embeddable
 public class OrderItem implements Serializable {
-    private Long order_item_id;
-    private int price;
-    private OrderEntity order;
-    private FilmEntity film;
+    private Long order_id;
+    private Long film_id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getOrder_item_id() {
-        return order_item_id;
+    public OrderItem() {
     }
 
-    public void setOrder_item_id(Long id) {
-        this.order_item_id = id;
+    public Long getOrder_id() {
+        return order_id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false,
-            foreignKey = @ForeignKey(name = "order_detail_ord_fk"))
-    public OrderEntity getOrder() {
-        return order;
+    public void setOrder_id(Long order_id) {
+        this.order_id = order_id;
     }
 
-    public void setOrder(OrderEntity order) {
-        this.order = order;
+    public Long getFilm_id() {
+        return film_id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "film_id",
-            foreignKey = @ForeignKey(name = "order_detail_ord_fk"))
-    public FilmEntity getFilms() {
-        return film;
+    public void setFilm_id(Long film_id) {
+        this.film_id = film_id;
     }
 
-    public void setFilms(FilmEntity film) {
-        this.film = film;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderItem orderItem = (OrderItem) o;
+        return Objects.equals(order_id, orderItem.order_id) &&
+                Objects.equals(film_id, orderItem.film_id);
     }
 
-    @Column(name = "price", nullable = false)
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
+    @Override
+    public int hashCode() {
+        return Objects.hash(order_id, film_id);
     }
 }

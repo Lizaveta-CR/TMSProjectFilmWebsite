@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 public class MainController {
 
@@ -18,12 +16,11 @@ public class MainController {
     FilmEntityService filmEntityService;
 
     @GetMapping("/getAllFilmsFromStore")
-    public String getAllFilmsFromStore(Model model, @RequestParam(value = "name", defaultValue = "") String likeName, @RequestParam(value = "page", defaultValue = "1") int page) {
-//        List<FilmEntity> films = filmEntityService.getAll();
+    public String getAllFilmsFromStore(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
         final int maxResult = 5;
         final int maxNavigationPage = 10;
 
-        PaginationResult<FilmEntity> films = filmEntityService.queryFilms(page, maxResult, maxNavigationPage, likeName);
+        PaginationResult<FilmEntity> films = filmEntityService.getAll(page, maxResult, maxNavigationPage);
         model.addAttribute("films", films);
         return "film";
     }

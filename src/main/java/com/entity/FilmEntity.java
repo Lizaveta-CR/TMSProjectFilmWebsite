@@ -2,8 +2,8 @@ package com.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "films")
@@ -15,7 +15,8 @@ public class FilmEntity implements Serializable {
     private String translation;
     private String continuance;
     private String date;
-    private List<OrderItem> orderItemList = new ArrayList<>();
+    private String price;
+    private Set<OrderEntity> orders = new HashSet<>(0);
 
     public FilmEntity() {
     }
@@ -83,13 +84,21 @@ public class FilmEntity implements Serializable {
         this.date = date;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-
-    public List<OrderItem> getOrderItemList() {
-        return orderItemList;
+    @Column(name = "price")
+    public String getPrice() {
+        return price;
     }
 
-    public void setOrderItemList(List<OrderItem> orderItemList) {
-        this.orderItemList = orderItemList;
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "films")
+    public Set<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<OrderEntity> orders) {
+        this.orders = orders;
     }
 }

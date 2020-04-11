@@ -12,8 +12,8 @@
     <a href="${pageContext.request.contextPath}/?lang=en">English</a>&nbsp;&nbsp;&nbsp;
     <a href="${pageContext.request.contextPath}/?lang=ru">Русский</a>&nbsp;&nbsp;&nbsp;
     <h1><spring:message code="lbl.helloTitle"/></h1>
-    <a href="/login"><spring:message code="lbl.helloLogin"/></a><a href="/registration"><spring:message
-        code="lbl.helloRegister"/></a>
+    <a href="/login"><spring:message code="lbl.helloLogin"/></a>
+    <a href="/registration"><spring:message code="lbl.helloRegister"/></a>&nbsp;&nbsp;&nbsp;
 </security:authorize>
 
 <security:authorize access="hasRole('ROLE_USER')">

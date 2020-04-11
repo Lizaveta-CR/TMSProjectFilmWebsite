@@ -2,7 +2,9 @@ package com.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -10,7 +12,7 @@ public class OrderEntity {
     private int order_id;
     private int order_num;
     private UserEntity user;
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private Set<FilmEntity> films = new HashSet<>(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,13 +39,16 @@ public class OrderEntity {
         return user;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "order_item", joinColumns = {@JoinColumn(name = "order_id")}
+            , inverseJoinColumns = {@JoinColumn(name = "film_id")})
+
+    public Set<FilmEntity> getFilms() {
+        return films;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setFilms(Set<FilmEntity> films) {
+        this.films = films;
     }
 
     public void setUser(UserEntity user) {
