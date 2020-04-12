@@ -24,6 +24,11 @@ public class FilmEntityServiceImpl implements FilmEntityService {
     }
 
     @Override
+    public FilmEntity getFilmByFilmname(String name) {
+        return filmEntityRepository.getFilmByFilmname(name);
+    }
+
+    @Override
     public void saveFilms(List<Film> films, String language) throws Exception {
         for (Film film : films) {
             mapper.toDto(filmEntityRepository.saveFilms(mapper.toEntity(film), language));
@@ -43,6 +48,11 @@ public class FilmEntityServiceImpl implements FilmEntityService {
     @Override
     public FilmEntity getFilmById(long id) {
         return filmEntityRepository.getFilmById(id);
+    }
+
+    @Override
+    public String getFilmDescription(FilmEntity filmEntity) {
+        return filmEntityRepository.getFilmDescription(filmEntity);
     }
 
 //    @Override

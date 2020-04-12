@@ -1,6 +1,7 @@
 package com.repository;
 
 import com.entity.FilmEntity;
+import com.entity.UserEntity;
 import com.kinogo.Film;
 import com.kinogo.MainKinogoParse;
 import com.model.PaginationResult;
@@ -13,16 +14,15 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Repository
 @Transactional
 public class FilmEntityRepositoryImpl implements FilmEntityRepository {
     private static final Logger logger = LogManager.getLogger(SecurityServiceImpl.class);
+    private static List<Film> filmList = new ArrayList<>();
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -30,35 +30,54 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
     @Autowired
     MainKinogoParse mainKinogoParse;
 
-//    @Autowired
-//    LocaleChangeInterceptor localeInterceptor;
-
     private Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 
     @Override
     public List<Film> parse(int num) throws Exception {
-        return mainKinogoParse.parse(num);
+        List<Film> parse = mainKinogoParse.parse(num);
+        for (Film film : parse) {
+            filmList.add(film);
+        }
+        removeDublicates(filmList);
+        return parse;
+    }
+
+    @Override
+    public FilmEntity getFilmByFilmname(String name) {
+        List<FilmEntity> filmEntities = new ArrayList<FilmEntity>();
+
+        filmEntities = getSession().createQuery("from FilmEntity where name=?1").setParameter(1, name)
+                .list();
+
+        if (filmEntities.size() > 0) {
+            return filmEntities.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Override
     public FilmEntity saveFilms(FilmEntity film, String language) throws Exception {
-        double min = 0.0;
-        double max = 2.10;
-        double diff = max - min;
-        DecimalFormat formatter = new DecimalFormat("#0.00");
-        double randomValue = min + Math.random() * diff;
-        double tempRes = Math.floor(randomValue * 10);
-        double price = tempRes / 10;
-        String priceFormatted = formatter.format(price);
-        if (priceFormatted.equals("0,00")) {
-            film.setPrice("free");
-        } else {
-            film.setPrice(priceFormatted);
+        if (getFilmByFilmname(film.getName()) == null) {
+            double min = 0.0;
+            double max = 2.10;
+            double diff = max - min;
+            DecimalFormat formatter = new DecimalFormat("#0.00");
+            double randomValue = min + Math.random() * diff;
+            double tempRes = Math.floor(randomValue * 10);
+            double price = tempRes / 10;
+            String priceFormatted = formatter.format(price);
+            if (priceFormatted.equals("0,00")) {
+                film.setPrice("free");
+            } else {
+                film.setPrice(priceFormatted);
+            }
+            getSession().persist(film);
+            logger.info("Film was saved. Film details = " + film);
+            return null;
         }
-        getSession().persist(film);
-        logger.info("Film was saved. Film details = " + film);
         return null;
     }
 
@@ -74,26 +93,26 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
         return new PaginationResult<FilmEntity>(query, page, maxResult, maxNavigationPage);
     }
 
-//    @Override
-//    public List<FilmEntity> getAll() {
-//        Query fromOrderEntity = getSession().createQuery("from FilmEntity");
-//        List resultList = fromOrderEntity.getResultList();
-//        logger.info("GetAllList Films method was successfully done");
-//        return resultList;
-//    }
-
     @Override
     public FilmEntity getFilmById(long id) {
         FilmEntity film = (FilmEntity) getSession().get(FilmEntity.class, id);
         return film;
     }
 
-//    @Override
-////    @Transactional
-//    public void update(FilmEntity film) {
-//        FilmEntity filmById = getFilmById(film.getFilm_id());
-//        getSession().saveOrUpdate(filmById);
-//    }
+    @Override
+    public String getFilmDescription(FilmEntity filmEntity) {
+        String description = null;
+        String nameEntity = filmEntity.getName();
+        for (Film filmFromList : filmList) {
+            if (filmFromList.getName().equals(nameEntity)) {
+                description = filmFromList.getDescription();
+                if (description == null || description.isEmpty()) {
+                    description = "Sorry, no information";
+                }
+            }
+        }
+        return description;
+    }
 
     @Override
     public void delete(long id) {
@@ -101,4 +120,12 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
         getSession().delete(filmById);
     }
 
+    private List<Film> removeDublicates(List<Film> filmList) {
+        Set<Film> set = new LinkedHashSet<>();
+        set.addAll(filmList);
+        filmList.clear();
+        filmList.addAll(set);
+
+        return filmList;
+    }
 }

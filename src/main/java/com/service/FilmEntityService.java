@@ -10,6 +10,8 @@ import java.util.Locale;
 public interface FilmEntityService {
     List<Film> parse(int num) throws Exception;
 
+    FilmEntity getFilmByFilmname(String name);
+
     void saveFilms(List<Film> films, String language) throws Exception;
 
     PaginationResult<FilmEntity> getAll(int page, int maxResult, int maxNavigationPage);
@@ -19,6 +21,8 @@ public interface FilmEntityService {
     FilmEntity getFilmById(long id);
 
 //    void update(FilmEntity film);
+
+    String getFilmDescription(FilmEntity filmEntity);
 
     void delete(long id);
 }

@@ -101,4 +101,19 @@ public class FilmEntity implements Serializable {
     public void setOrders(Set<OrderEntity> orders) {
         this.orders = orders;
     }
+
+    @Override
+    public String toString() {
+        return "FilmEntity{" +
+                "film_id=" + film_id +
+                ", name='" + name + '\'' +
+                ", year='" + year + '\'' +
+                ", quality='" + quality + '\'' +
+                ", translation='" + translation + '\'' +
+                ", continuance='" + continuance + '\'' +
+                ", date='" + date + '\'' +
+                ", price='" + price + '\'' +
+                ", orders=" + orders +
+                '}';
+    }
 }

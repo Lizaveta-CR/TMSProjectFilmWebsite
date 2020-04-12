@@ -40,15 +40,20 @@
                     <td>${film.price}</td>
                     <security:authorize access="hasRole('ROLE_ADMIN')">
                         <td><a href="/admin/delete/${film.film_id}"><spring:message code="lbl.delete"/></a></td>
-<%--                        <td><a href="/admin/edit/${film.film_id}"><spring:message code="lbl.edit"/></a></td>--%>
+                        <%--                        <td><a href="/admin/edit/${film.film_id}"><spring:message code="lbl.edit"/></a></td>--%>
+                    </security:authorize>
+                    <security:authorize access="not hasRole('ROLE_ADMIN')">
+                        <td><a href="/buy"><spring:message code="lbl.buy"/></a></td>
+                        <td><a href="/description/${film.film_id}"><spring:message code="lbl.viewDescription"/></a></td>
+                        <%--                        <td><a href="/admin/edit/${film.film_id}"><spring:message code="lbl.edit"/></a></td>--%>
                     </security:authorize>
                 </tr>
             </div>
         </c:forEach>
     </table>
-<%--    <security:authorize access="hasRole('ROLE_ADMIN')">--%>
-<%--        <a href="/admin"><spring:message code="lbl.add"/></a>--%>
-<%--    </security:authorize>--%>
+    <%--    <security:authorize access="hasRole('ROLE_ADMIN')">--%>
+    <%--        <a href="/admin"><spring:message code="lbl.add"/></a>--%>
+    <%--    </security:authorize>--%>
     <a href="/"><spring:message code="lbl.exit"/></a>
     <c:if test="${films.totalPages > 1}">
         <div class="page-navigator">
