@@ -81,9 +81,13 @@ public class LoginRegisterController {
 
     @PostMapping("/forgotPass")
     public String forgotPass(@ModelAttribute("mobile") UserEntity userEntity) {
-        UserEntity user = userService.findByMobile(userEntity.getMobile());
-        securityService.autoLogin(user.getUsername(), user.getPassword());
-        return "redirect:/";
+        try {
+            UserEntity user = userService.findByMobile(userEntity.getMobile());
+            securityService.autoLogin(user.getUsername(), user.getPassword());
+            return "redirect:/";
+        } catch (NullPointerException e) {
+            return "redirect:/registration";
+        }
     }
 
     @GetMapping("/403")

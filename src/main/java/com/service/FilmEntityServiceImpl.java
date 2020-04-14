@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class FilmEntityServiceImpl implements FilmEntityService {
@@ -24,9 +23,10 @@ public class FilmEntityServiceImpl implements FilmEntityService {
     }
 
     @Override
-    public FilmEntity getFilmByFilmname(String name) {
-        return filmEntityRepository.getFilmByFilmname(name);
+    public FilmEntity getFilmByFilmName(String name) {
+        return filmEntityRepository.getFilmByFilmName(name);
     }
+
 
     @Override
     public void saveFilms(List<Film> films, String language) throws Exception {

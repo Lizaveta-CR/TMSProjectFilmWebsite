@@ -1,5 +1,6 @@
 package com.repository;
 
+import com.entity.OrderEntity;
 import com.entity.UserEntity;
 import com.entity.UserRole;
 import org.apache.log4j.LogManager;
@@ -52,6 +53,11 @@ public class UserRepositoryImpl implements UserRepository {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public UserEntity getUserByOrder(OrderEntity order) {
+        return null;
     }
 
     @Override

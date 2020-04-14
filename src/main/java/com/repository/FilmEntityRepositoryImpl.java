@@ -1,7 +1,7 @@
 package com.repository;
 
 import com.entity.FilmEntity;
-import com.entity.UserEntity;
+import com.entity.OrderEntity;
 import com.kinogo.Film;
 import com.kinogo.MainKinogoParse;
 import com.model.PaginationResult;
@@ -45,7 +45,7 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
     }
 
     @Override
-    public FilmEntity getFilmByFilmname(String name) {
+    public FilmEntity getFilmByFilmName(String name) {
         List<FilmEntity> filmEntities = new ArrayList<FilmEntity>();
 
         filmEntities = getSession().createQuery("from FilmEntity where name=?1").setParameter(1, name)
@@ -60,7 +60,7 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
 
     @Override
     public FilmEntity saveFilms(FilmEntity film, String language) throws Exception {
-        if (getFilmByFilmname(film.getName()) == null) {
+        if (getFilmByFilmName(film.getName()) == null) {
             double min = 0.0;
             double max = 2.10;
             double diff = max - min;
@@ -117,7 +117,12 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
     @Override
     public void delete(long id) {
         FilmEntity filmById = getFilmById(id);
+        Set<OrderEntity> orders = filmById.getOrders();
+        for (OrderEntity order : orders) {
+            order.removeFilm(filmById);
+        }
         getSession().delete(filmById);
+
     }
 
     private List<Film> removeDublicates(List<Film> filmList) {

@@ -37,4 +37,9 @@ public class UserServiceImpl implements UserService {
     public UserEntity findByMobile(String mobile) {
         return userRepository.findByMobile(mobile);
     }
+
+    @Override
+    public UserEntity getUserByOrder(OrderEntity order) {
+        return null;
+    }
 }

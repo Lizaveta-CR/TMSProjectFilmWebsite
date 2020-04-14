@@ -33,11 +33,10 @@ CREATE TABLE films
 
 CREATE table orders
 (
-    order_id  int(11)     NOT NULL AUTO_INCREMENT,
-    username  varchar(45) NOT NULL,
-    order_num int(11)     NOT NULL,
+    order_id int(11)     NOT NULL AUTO_INCREMENT,
+    username varchar(45) NOT NULL,
     PRIMARY KEY (order_id),
-    UNIQUE KEY uni_username_order (order_num, username),
+    UNIQUE KEY uni_username_order (order_id, username),
     KEY fk_username_idx_order (username),
     CONSTRAINT fk_username_order FOREIGN KEY (username) REFERENCES users (username)
 );
@@ -58,6 +57,8 @@ INSERT INTO users(username, password, mobile, enabled)
 VALUES ('liza', '1234', '1234567890', true);
 INSERT INTO users(username, password, mobile, enabled)
 VALUES ('alex', '1234', '9876543210', true);
+INSERT INTO users(username, password, mobile, enabled)
+VALUES ('q', 'q', '8877543323', true);
 
 INSERT INTO user_roles (username, role)
 VALUES ('liza', 'ROLE_USER');
@@ -65,12 +66,16 @@ INSERT INTO user_roles (username, role)
 VALUES ('liza', 'ROLE_ADMIN');
 INSERT INTO user_roles (username, role)
 VALUES ('alex', 'ROLE_USER');
+INSERT INTO user_roles (username, role)
+VALUES ('q', 'ROLE_USER');
 
-
+ALTER TABLE orders AUTO_INCREMENT = 1;
 # drop table user_roles
 
 # drop table users
 
-# drop table films
+# drop table films;
 
-# drop table order_item
+# drop table order_item;
+
+# drop table orders

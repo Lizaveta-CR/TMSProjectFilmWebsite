@@ -1,45 +1,35 @@
 package com.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
 public class OrderEntity {
-    private int order_id;
-    private int order_num;
+    private long order_id;
     private UserEntity user;
     private Set<FilmEntity> films = new HashSet<>(0);
 
+    public OrderEntity() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getOrder_id() {
+    public long getOrder_id() {
         return order_id;
     }
 
-    public void setOrder_id(int id) {
+    public void setOrder_id(long id) {
         this.order_id = id;
     }
 
-    @Column(name = "order_num", nullable = false)
-    public int getOrder_num() {
-        return order_num;
-    }
-
-    public void setOrder_num(int order_num) {
-        this.order_num = order_num;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "username")
     public UserEntity getUser() {
         return user;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "order_item", joinColumns = {@JoinColumn(name = "order_id")}
             , inverseJoinColumns = {@JoinColumn(name = "film_id")})
 
@@ -53,5 +43,13 @@ public class OrderEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public void addFilm(FilmEntity filmEntity) {
+        films.add(filmEntity);
+    }
+
+    public void removeFilm(FilmEntity filmEntity) {
+        films.remove(filmEntity);
     }
 }

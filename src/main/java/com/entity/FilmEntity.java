@@ -3,6 +3,7 @@ package com.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -93,7 +94,7 @@ public class FilmEntity implements Serializable {
         this.price = price;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "films")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "films")
     public Set<OrderEntity> getOrders() {
         return orders;
     }
@@ -102,18 +103,31 @@ public class FilmEntity implements Serializable {
         this.orders = orders;
     }
 
-    @Override
-    public String toString() {
-        return "FilmEntity{" +
-                "film_id=" + film_id +
-                ", name='" + name + '\'' +
-                ", year='" + year + '\'' +
-                ", quality='" + quality + '\'' +
-                ", translation='" + translation + '\'' +
-                ", continuance='" + continuance + '\'' +
-                ", date='" + date + '\'' +
-                ", price='" + price + '\'' +
-                ", orders=" + orders +
-                '}';
+    public void addOrder(OrderEntity order) {
+        orders.add(order);
     }
+
+    public void removeOrder(OrderEntity order) {
+        orders.remove(order);
+    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        FilmEntity that = (FilmEntity) o;
+//        return film_id == that.film_id &&
+//                Objects.equals(name, that.name) &&
+//                Objects.equals(year, that.year) &&
+//                Objects.equals(quality, that.quality) &&
+//                Objects.equals(translation, that.translation) &&
+//                Objects.equals(continuance, that.continuance) &&
+//                Objects.equals(date, that.date) &&
+//                Objects.equals(price, that.price) &&
+//                Objects.equals(orders, that.orders);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(film_id, name, year, quality, translation, continuance, date, price, orders);
+//    }
 }

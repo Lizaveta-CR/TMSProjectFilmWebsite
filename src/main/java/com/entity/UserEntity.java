@@ -1,10 +1,7 @@
 package com.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -15,7 +12,7 @@ public class UserEntity {
     private String mobile;
     private boolean enabled;
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
-    private List<OrderEntity> orders = new ArrayList<>();
+    private Set<OrderEntity> orders = new HashSet<>(0);
 
     public UserEntity() {
     }
@@ -70,7 +67,7 @@ public class UserEntity {
         this.mobile = mobile;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     public Set<UserRole> getUserRole() {
         return this.userRole;
     }
@@ -79,24 +76,16 @@ public class UserEntity {
         this.userRole = userRole;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    public List<OrderEntity> getOrders() {
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    public Set<OrderEntity> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<OrderEntity> orders) {
+    public void setOrders(Set<OrderEntity> orders) {
         this.orders = orders;
     }
 
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", enabled=" + enabled +
-                ", userRole=" + userRole +
-                ", orders=" + orders +
-                '}';
+    public void addOrder(OrderEntity orderEntity) {
+        orders.add(orderEntity);
     }
 }

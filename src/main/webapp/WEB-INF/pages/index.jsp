@@ -35,6 +35,7 @@
         </h2>
     </c:if>
     <a href="/getAllFilmsFromStore"> <spring:message code="lbl.getFilmsFromStore"/></a>
+    <a href="/showUserOrders/${pageContext.request.userPrincipal.name}"> <spring:message code="lbl.myOrders"/></a>
 </security:authorize>
 <security:authorize access="hasRole('ROLE_ADMIN')">
 <a href="/admin">

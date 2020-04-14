@@ -1,5 +1,7 @@
 package com.service;
 
+import com.entity.FilmEntity;
+import com.entity.OrderEntity;
 import com.entity.UserEntity;
 
 public interface UserService {
@@ -8,4 +10,7 @@ public interface UserService {
     UserEntity findByUsername(String username);
 
     UserEntity findByMobile(String mobile);
+
+    UserEntity getUserByOrder(OrderEntity order);
+
 }

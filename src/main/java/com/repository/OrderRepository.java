@@ -1,11 +1,11 @@
 package com.repository;
 
-import com.entity.FilmEntity;
 import com.entity.OrderEntity;
-import com.entity.OrderItem;
+import com.entity.UserEntity;
 import com.model.PaginationResult;
 
 import java.util.List;
+
 
 public interface OrderRepository {
     void saveOrder(OrderEntity order);
@@ -14,4 +14,5 @@ public interface OrderRepository {
 
     OrderEntity getOrderById(long id);
 
+    List<OrderEntity> getOrdersByUsername(UserEntity userEntity);
 }

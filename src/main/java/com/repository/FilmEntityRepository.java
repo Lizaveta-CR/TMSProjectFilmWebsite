@@ -11,7 +11,7 @@ import java.util.Locale;
 public interface FilmEntityRepository {
     List<Film> parse(int num) throws Exception;
 
-    FilmEntity getFilmByFilmname(String name);
+    FilmEntity getFilmByFilmName(String name);
 
     FilmEntity saveFilms(FilmEntity films, String language) throws Exception;
 

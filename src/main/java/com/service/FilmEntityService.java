@@ -10,7 +10,7 @@ import java.util.Locale;
 public interface FilmEntityService {
     List<Film> parse(int num) throws Exception;
 
-    FilmEntity getFilmByFilmname(String name);
+    FilmEntity getFilmByFilmName(String name);
 
     void saveFilms(List<Film> films, String language) throws Exception;
 

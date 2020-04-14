@@ -6,8 +6,8 @@ import java.util.Objects;
 
 @Embeddable
 public class OrderItem implements Serializable {
-    private Long order_id;
-    private Long film_id;
+    private long order_id;
+    private long film_id;
 
     public OrderItem() {
     }
