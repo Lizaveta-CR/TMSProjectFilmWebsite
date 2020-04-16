@@ -61,8 +61,10 @@ public class UserValidator implements Validator {
     }
 
     private boolean containsDigits(String string) {
-        Pattern pDigits = Pattern.compile("^[0-9]");
-        Matcher mDigits = pDigits.matcher(string);
-        return mDigits.find();
+        if (string.matches("^[0-9]*$")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

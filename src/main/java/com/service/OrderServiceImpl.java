@@ -1,5 +1,6 @@
 package com.service;
 
+import com.entity.FilmEntity;
 import com.entity.OrderEntity;
 import com.entity.UserEntity;
 import com.model.PaginationResult;
@@ -22,11 +23,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PaginationResult<OrderEntity> getAll(int page, int maxResult, int maxNavigationPage) {
-        return orderRepository.getAll(page, maxResult, maxNavigationPage);
-    }
-
-    @Override
     public OrderEntity getOrderById(long id) {
         return orderRepository.getOrderById(id);
     }
@@ -34,5 +30,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderEntity> getOrdersByUsername(UserEntity userEntity) {
         return orderRepository.getOrdersByUsername(userEntity);
+    }
+
+    @Override
+    public Set<FilmEntity> getFilmsByOrder(long orderEntityId) {
+        return orderRepository.getFilmsByOrder(orderEntityId);
     }
 }

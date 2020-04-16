@@ -40,11 +40,6 @@ public class FilmEntityServiceImpl implements FilmEntityService {
         return filmEntityRepository.getAll(page, maxResult, maxNavigationPage);
     }
 
-//    @Override
-//    public List<FilmEntity> getAll() {
-//        return filmEntityRepository.getAll();
-//    }
-
     @Override
     public FilmEntity getFilmById(long id) {
         return filmEntityRepository.getFilmById(id);
@@ -54,11 +49,6 @@ public class FilmEntityServiceImpl implements FilmEntityService {
     public String getFilmDescription(FilmEntity filmEntity) {
         return filmEntityRepository.getFilmDescription(filmEntity);
     }
-
-//    @Override
-//    public void update(FilmEntity film) {
-//        filmEntityRepository.update(film);
-//    }
 
     @Override
     public void delete(long id) {

@@ -3,8 +3,8 @@ package com.controller;
 import com.entity.FilmEntity;
 import com.entity.OrderEntity;
 import com.entity.UserEntity;
+import com.model.OrderCart;
 import com.model.PaginationResult;
-import com.model.UserStorage;
 import com.service.FilmEntityService;
 import com.service.OrderService;
 import com.service.UserService;
@@ -21,7 +21,7 @@ import java.util.*;
 
 @Controller
 public class MainController {
-    private final Map<String, UserStorage> userFilmMap = new HashMap<>();
+    private Set<FilmEntity> filmEntitySet = new HashSet<>();
 
     @Autowired
     FilmEntityService filmEntityService;
@@ -50,71 +50,85 @@ public class MainController {
         return "description";
     }
 
+
     @GetMapping("/buy/{id}")
-    public String buyPage(@PathVariable int id, Model model, Authentication authentication) {
-        Set<FilmEntity> films = new HashSet<>();
+    public String buy(@PathVariable int id, Model model, Authentication authentication) {
         UserEntity user = userService.findByUsername(authentication.getName());
         FilmEntity filmById = filmEntityService.getFilmById(id);
 
-        UserStorage userStorage = new UserStorage();
-        userStorage.setUsername(user.getUsername());
-        userStorage.addFilm(filmById.getName());
+        filmEntitySet.add(filmEntityService.getFilmByFilmName(filmById.getName()));
+        OrderCart orderCart = new OrderCart();
+        double totalPrice = orderCart.buildTotalPrice(filmEntitySet);
 
-        Set<String> filmNames = userStorage.getFilmNames();
-        for (String filmName : filmNames) {
-            films.add(filmEntityService.getFilmByFilmName(filmName));
-        }
-
-        OrderEntity order = new OrderEntity();
-        order.setFilms(films);
-
-        order.setUser(user);
-        filmById.addOrder(order);
-
-        userStorage.setOrder(order);
-
-        userFilmMap.put(user.getUsername(), userStorage);
-
-        double totalPrice = 0;
-        for (FilmEntity film : order.getFilms()) {
-            String price = film.getPrice();
-            if (price.equals("free")) {
-                totalPrice = totalPrice + 0;
-            } else {
-                double doubleFilmPrice = Double.parseDouble(price.replace(',', '.'));
-                totalPrice = totalPrice + doubleFilmPrice;
-                BigDecimal totalPriceBigDecimal = new BigDecimal(totalPrice).setScale(2, RoundingMode.HALF_UP);
-                totalPrice = totalPriceBigDecimal.doubleValue();
-            }
-        }
-
-        model.addAttribute("user", userStorage);
-        model.addAttribute("film", films);
+        model.addAttribute("user", user);
+        model.addAttribute("film", filmEntitySet);
         model.addAttribute("price", totalPrice);
         return "buyPage";
     }
 
-    @GetMapping("addFilmToOrder")
+    @GetMapping("/addFilmToOrder")
     public String addFilmToOrder() {
         return "redirect:/getAllFilmsFromStore";
     }
 
-    @GetMapping("/confirmOrder/{username}")
-    public String confirmOrder(@PathVariable String username, Model model) {
-        double totalPrice = 0;
-        UserStorage userStorage = userFilmMap.get(username);
-        OrderEntity order = userStorage.getOrder();
+    @GetMapping("/removeFilmFromOrder/{filmName}")
+    public String removeFilmFromOrder(@PathVariable String filmName, Authentication authentication, Model model) {
+        FilmEntity film = filmEntityService.getFilmByFilmName(filmName);//не передает знак вопроса
+        UserEntity user = userService.findByUsername(authentication.getName());
+        try {
+            Iterator<FilmEntity> iterator = filmEntitySet.iterator();
+            while (iterator.hasNext()) {
+                FilmEntity nextFilm = iterator.next();
+                if (nextFilm.getName().equals(film.getName())) {
+                    iterator.remove();
+                }
+            }
+            OrderCart orderCart = new OrderCart();
+            double totalPrice = orderCart.buildTotalPrice(filmEntitySet);
+            model.addAttribute("user", user);
+            model.addAttribute("price", totalPrice);
+            model.addAttribute("film", filmEntitySet);
+        } catch (NullPointerException e) {
+            return "errors/noOrders";
+        }
+        return "buyPage";
+    }
 
-        orderService.saveOrder(order);
+    @GetMapping("/removeAllOrders")
+    public String removeAllOrders() {
+        filmEntitySet.clear();
+        return "redirect:/getAllFilmsFromStore";
+    }
+
+    @GetMapping("/confirmOrder/{username}/{price}")
+    public String confirmOrder(@PathVariable String username, @PathVariable String price) {
+
+        UserEntity user = userService.findByUsername(username);
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setUser(user);
+        orderEntity.setPrice(price);
+        filmEntitySet.stream().forEach(filmEntity -> orderEntity.getFilms().add(filmEntity));
+        filmEntitySet.stream().forEach(filmEntity -> filmEntity.getOrders().add(orderEntity));
+
+        filmEntitySet.clear();
+        orderService.saveOrder(orderEntity);
         return "redirect:/";
     }
 
     @GetMapping("/showUserOrders/{username}")
     public String showUserOrders(@PathVariable String username, Model model) {
-        UserEntity byUsername = userService.findByUsername(username);
-        List<OrderEntity> ordersByUsername = orderService.getOrdersByUsername(byUsername);
+        try {
+            UserEntity byUsername = userService.findByUsername(username);
+            List<OrderEntity> ordersByUsername = orderService.getOrdersByUsername(byUsername);
 
-        model.addAttribute("orders", ordersByUsername);
-        return "userOrders";
+            ordersByUsername.stream().forEach(orderEntity -> {
+                orderEntity.setFilms(orderService.getFilmsByOrder(orderEntity.getOrder_id()));
+            });
+
+            model.addAttribute("orders", ordersByUsername);
+            return "userOrders";
+        } catch (NullPointerException e) {
+            return "errors/noOrders";
+        }
     }
 }

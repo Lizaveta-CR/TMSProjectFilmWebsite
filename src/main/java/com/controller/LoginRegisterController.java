@@ -14,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Controller
 public class LoginRegisterController {
     @Autowired
@@ -81,12 +84,22 @@ public class LoginRegisterController {
 
     @PostMapping("/forgotPass")
     public String forgotPass(@ModelAttribute("mobile") UserEntity userEntity) {
-        try {
-            UserEntity user = userService.findByMobile(userEntity.getMobile());
-            securityService.autoLogin(user.getUsername(), user.getPassword());
-            return "redirect:/";
-        } catch (NullPointerException e) {
-            return "redirect:/registration";
+        String mobile = userEntity.getMobile();
+//        Pattern pDigits = Pattern.compile("^[0-9]");
+//        Matcher mDigits = pDigits.matcher(mobile);
+
+
+//        boolean boo = mDigits.find();//доделать "мрммм8876"-на это сработает
+        if (mobile.matches("^[0-9]*$")) {
+            try {
+                UserEntity user = userService.findByMobile(userEntity.getMobile());
+                securityService.autoLogin(user.getUsername(), user.getPassword());
+                return "redirect:/";
+            } catch (NullPointerException e) {
+                return "redirect:/registration";
+            }
+        } else {
+            return "errors/mobileFormatError";
         }
     }
 

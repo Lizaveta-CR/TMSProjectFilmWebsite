@@ -17,9 +17,19 @@
 <c:forEach items="${orders.iterator()}" var="order">
     <div class="product-preview-container">
         <tr>
-            <td>${order.order_id}</td>
+            <th><spring:message code="lbl.priceToPay"/></th>
+            <td>${order.price}</td>
+            &nbsp
+            <c:forEach items="${order.films}" var="film">
+        <tr>
+            <td>${film.name}</td>
+            <td>${film.price}</td>
+            &nbsp
+        </tr>
+        </c:forEach>
         </tr>
     </div>
 </c:forEach>
+<a href="/"><spring:message code="lbl.exit"/></a>
 </body>
 </html>

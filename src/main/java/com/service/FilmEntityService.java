@@ -14,15 +14,13 @@ public interface FilmEntityService {
 
     void saveFilms(List<Film> films, String language) throws Exception;
 
-    PaginationResult<FilmEntity> getAll(int page, int maxResult, int maxNavigationPage);
+    void delete(long id);
 
-//    List<FilmEntity> getAll();
+    PaginationResult<FilmEntity> getAll(int page, int maxResult, int maxNavigationPage);
 
     FilmEntity getFilmById(long id);
 
-//    void update(FilmEntity film);
-
     String getFilmDescription(FilmEntity filmEntity);
 
-    void delete(long id);
+
 }

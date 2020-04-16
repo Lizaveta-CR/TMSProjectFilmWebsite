@@ -35,6 +35,7 @@ CREATE table orders
 (
     order_id int(11)     NOT NULL AUTO_INCREMENT,
     username varchar(45) NOT NULL,
+    price    varchar(5)  NOT NULL,
     PRIMARY KEY (order_id),
     UNIQUE KEY uni_username_order (order_id, username),
     KEY fk_username_idx_order (username),
@@ -69,7 +70,8 @@ VALUES ('alex', 'ROLE_USER');
 INSERT INTO user_roles (username, role)
 VALUES ('q', 'ROLE_USER');
 
-ALTER TABLE orders AUTO_INCREMENT = 1;
+ALTER TABLE orders
+    AUTO_INCREMENT = 1;
 # drop table user_roles
 
 # drop table users

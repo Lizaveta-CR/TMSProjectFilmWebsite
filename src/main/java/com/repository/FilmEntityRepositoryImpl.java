@@ -54,7 +54,14 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
         if (filmEntities.size() > 0) {
             return filmEntities.get(0);
         } else {
-            return null;
+            name = name + "?";
+            filmEntities = getSession().createQuery("from FilmEntity where name=?1").setParameter(1, name)
+                    .list();
+            if (filmEntities.size() > 0) {
+                return filmEntities.get(0);
+            } else {
+                return null;
+            }
         }
     }
 

@@ -22,10 +22,12 @@
     <div class="product-preview-container">
         <td><spring:message code="lbl.filmName"/>: ${film.name}</td>
         <td><spring:message code="lbl.filmPrice"/>: ${film.price}</td>
+        <td><a href="/removeFilmFromOrder/${film.name}"><spring:message code="lbl.delete"/></a></td>
     </div>
 </c:forEach>
 <spring:message code="lbl.priceToPay"/>: ${price}
 <a href="/addFilmToOrder"><spring:message code="lbl.add"/></a>
-<a href="/confirmOrder/${user.username}"><spring:message code="lbl.buy"/></a>
+<a href="/confirmOrder/${user.username}/${price}"><spring:message code="lbl.buy"/></a>
+<a href="/removeAllOrders"><spring:message code="lbl.exit"/></a>
 </body>
 </html>

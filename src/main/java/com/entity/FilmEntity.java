@@ -110,24 +110,24 @@ public class FilmEntity implements Serializable {
     public void removeOrder(OrderEntity order) {
         orders.remove(order);
     }
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        FilmEntity that = (FilmEntity) o;
-//        return film_id == that.film_id &&
-//                Objects.equals(name, that.name) &&
-//                Objects.equals(year, that.year) &&
-//                Objects.equals(quality, that.quality) &&
-//                Objects.equals(translation, that.translation) &&
-//                Objects.equals(continuance, that.continuance) &&
-//                Objects.equals(date, that.date) &&
-//                Objects.equals(price, that.price) &&
-//                Objects.equals(orders, that.orders);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(film_id, name, year, quality, translation, continuance, date, price, orders);
-//    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FilmEntity that = (FilmEntity) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(year, that.year) &&
+                Objects.equals(quality, that.quality) &&
+                Objects.equals(translation, that.translation) &&
+                Objects.equals(continuance, that.continuance) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(orders, that.orders);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, year, quality, translation, continuance, date, price, orders);
+    }
 }

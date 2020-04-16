@@ -12,6 +12,7 @@ public class OrderItem implements Serializable {
     public OrderItem() {
     }
 
+    @Column
     public Long getOrder_id() {
         return order_id;
     }
@@ -20,6 +21,7 @@ public class OrderItem implements Serializable {
         this.order_id = order_id;
     }
 
+    @Column
     public Long getFilm_id() {
         return film_id;
     }

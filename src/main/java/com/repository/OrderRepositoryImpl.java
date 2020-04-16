@@ -16,7 +16,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -37,16 +39,6 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public PaginationResult<OrderEntity> getAll(int page, int maxResult, int maxNavigationPage) {
-        String sql = "from OrderEntity ";
-
-        Query query = getSession().createQuery(sql);
-
-        logger.info("GetAllPagination Orders method was successfully done");
-        return new PaginationResult<OrderEntity>(query, page, maxResult, maxNavigationPage);
-    }
-
-    @Override
     public OrderEntity getOrderById(long id) {
         OrderEntity order = (OrderEntity) getSession().get(OrderEntity.class, id);
         return order;
@@ -61,6 +53,24 @@ public class OrderRepositoryImpl implements OrderRepository {
 
         if (orderEntities.size() > 0) {
             return orderEntities;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Set<FilmEntity> getFilmsByOrder(long orderEntityId) {
+        Set<FilmEntity> filmEntities = new HashSet<>();
+
+        List<OrderEntity> orderEntities =
+                getSession().createQuery("from OrderEntity where order_id=?1").setParameter(1, orderEntityId).list();
+
+        for (OrderEntity orderEntity : orderEntities) {
+            Set<FilmEntity> films = orderEntity.getFilms();
+            filmEntities.addAll(films);
+        }
+        if (filmEntities.size() > 0) {
+            return filmEntities;
         } else {
             return null;
         }

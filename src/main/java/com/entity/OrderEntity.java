@@ -8,6 +8,7 @@ import java.util.*;
 public class OrderEntity {
     private long order_id;
     private UserEntity user;
+    private String price;
     private Set<FilmEntity> films = new HashSet<>(0);
 
     public OrderEntity() {
@@ -21,6 +22,15 @@ public class OrderEntity {
 
     public void setOrder_id(long id) {
         this.order_id = id;
+    }
+
+    @Column
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)

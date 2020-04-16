@@ -17,11 +17,9 @@ public interface FilmEntityRepository {
 
     PaginationResult<FilmEntity> getAll(int page, int maxResult, int maxNavigationPage);
 
-//    List<FilmEntity> getAll();
 
     FilmEntity getFilmById(long id);
 
-//    void update(FilmEntity film);
 
     String getFilmDescription(FilmEntity filmEntity);
 
