@@ -16,5 +16,6 @@
 </form>
 <a href="/"><spring:message code="lbl.exit"/></a>
 <a href="/admin/getAllOrdersFromStore"> <spring:message code="lbl.adminUserOrdersTitle"/></a>
+<a href="/admin/addAdmin"> <spring:message code="lbl.addAdmin"/></a>
 </body>
 </html>

@@ -4,6 +4,10 @@ import com.entity.FilmEntity;
 import com.entity.OrderEntity;
 import com.entity.UserEntity;
 import com.entity.UserRole;
+import com.model.PaginationResult;
+
+import java.util.List;
+import java.util.Set;
 
 public interface UserRepository {
 
@@ -11,7 +15,9 @@ public interface UserRepository {
 
     UserEntity findByMobile(String mobile);
 
-    UserEntity getUserByOrder(OrderEntity order);
+    List<UserEntity> getAll();
+
+    Set<UserRole> getRolesByUser(String username);
 
     void save(UserEntity user);
 

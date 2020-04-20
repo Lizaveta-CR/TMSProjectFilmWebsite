@@ -1,5 +1,7 @@
 package com.config;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.MessageSource;
@@ -24,6 +26,7 @@ import java.util.Locale;
 @EnableWebMvc
 @ComponentScan(basePackages = "com")
 public class WebConfig extends WebMvcConfigurerAdapter {
+    private static final Logger logger = LogManager.getLogger(WebConfig.class);
 
     @Bean
     ViewResolver viewResolver() {
@@ -49,14 +52,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:i18n/messages");
         messageSource.setDefaultEncoding("UTF-8");
+        logger.info("inside messageSource");
         return messageSource;
     }
 
-    @Bean
+    @Bean(name = "localeResolver")
     public CookieLocaleResolver localeResolver() {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         localeResolver.setDefaultLocale(Locale.ENGLISH);
         localeResolver.setCookieName("my-locale-cookie");
+        localeResolver.setCookieMaxAge(3600);
+        logger.info("inside localeResolver");
         return localeResolver;
     }
 
@@ -64,6 +70,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public LocaleChangeInterceptor localeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         interceptor.setParamName("lang");
+        logger.info("inside LocaleChangeInterceptor");
         return interceptor;
     }
 

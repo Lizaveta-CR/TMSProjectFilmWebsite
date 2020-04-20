@@ -7,6 +7,7 @@ import com.model.PaginationResult;
 import com.service.FilmEntityService;
 import com.kinogo.Film;
 import com.service.OrderService;
+import com.service.UserService;
 import com.validator.FilmPriceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,9 @@ public class AdminController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/getFilmsFromSite")
     public String getReloadPage(@RequestParam String filmNum, HttpServletRequest httpServletRequest) throws Exception {
@@ -65,5 +69,13 @@ public class AdminController {
 
         model.addAttribute("statistics", statistics);
         return "statistics";
+    }
+
+    @GetMapping("/addAdmin")
+    public String addAdmin(Model model) {
+        List<UserEntity> users = userService.getAll();
+        users.stream().forEach(userEntity -> userEntity.setUserRole(userService.getRolesByUser(userEntity.getUsername())));
+        model.addAttribute("users", users);
+        return "allUsers";
     }
 }

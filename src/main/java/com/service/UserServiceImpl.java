@@ -1,11 +1,14 @@
 package com.service;
 
 import com.entity.*;
+import com.model.PaginationResult;
 import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -39,7 +42,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getUserByOrder(OrderEntity order) {
-        return null;
+    public List<UserEntity> getAll() {
+        return userRepository.getAll();
+    }
+
+    @Override
+    public Set<UserRole> getRolesByUser(String username) {
+        return userRepository.getRolesByUser(username);
     }
 }

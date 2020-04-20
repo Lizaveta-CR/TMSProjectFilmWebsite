@@ -1,15 +1,10 @@
 package com.model;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 
 import java.io.*;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DescriptionWork {
@@ -23,7 +18,6 @@ public class DescriptionWork {
         this.map = map;
     }
 
-    //не записывать повторы
     public void writeToFile(Map<String, String> nameDescription) {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(FILE_PATH), "UTF-8"))) {
