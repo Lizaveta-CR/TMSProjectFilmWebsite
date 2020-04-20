@@ -14,8 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -43,7 +42,7 @@ public class MainController {
     }
 
     @GetMapping("/description/{id}")
-    public String getDescription(@PathVariable int id, Model model) {
+    public String getDescription(@PathVariable int id, Model model) throws IOException {
         FilmEntity filmById = filmEntityService.getFilmById(id);
         String filmDescription = filmEntityService.getFilmDescription(filmById);
         model.addAttribute("filmDescription", filmDescription);
@@ -55,7 +54,10 @@ public class MainController {
     public String buy(@PathVariable int id, Model model, Authentication authentication) {
         UserEntity user = userService.findByUsername(authentication.getName());
         FilmEntity filmById = filmEntityService.getFilmById(id);
-
+        for (FilmEntity filmEntity : filmEntitySet) {
+            if (filmEntity.getName().equals(filmById.getName()))
+                return "errors/errorAddedFilm";
+        }
         filmEntitySet.add(filmEntityService.getFilmByFilmName(filmById.getName()));
         OrderCart orderCart = new OrderCart();
         double totalPrice = orderCart.buildTotalPrice(filmEntitySet);
@@ -64,6 +66,7 @@ public class MainController {
         model.addAttribute("film", filmEntitySet);
         model.addAttribute("price", totalPrice);
         return "buyPage";
+
     }
 
     @GetMapping("/addFilmToOrder")
@@ -73,7 +76,7 @@ public class MainController {
 
     @GetMapping("/removeFilmFromOrder/{filmName}")
     public String removeFilmFromOrder(@PathVariable String filmName, Authentication authentication, Model model) {
-        FilmEntity film = filmEntityService.getFilmByFilmName(filmName);//не передает знак вопроса
+        FilmEntity film = filmEntityService.getFilmByFilmName(filmName);
         UserEntity user = userService.findByUsername(authentication.getName());
         try {
             Iterator<FilmEntity> iterator = filmEntitySet.iterator();
@@ -102,17 +105,21 @@ public class MainController {
 
     @GetMapping("/confirmOrder/{username}/{price}")
     public String confirmOrder(@PathVariable String username, @PathVariable String price) {
+        if (!filmEntitySet.isEmpty()) {
+            UserEntity user = userService.findByUsername(username);
+            OrderEntity orderEntity = new OrderEntity();
+            orderEntity.setUser(user);
+            orderEntity.setPrice(Double.parseDouble(price));
+            orderEntity.setDate(new Date());
+            filmEntitySet.stream().forEach(filmEntity -> orderEntity.getFilms().add(filmEntity));
+            filmEntitySet.stream().forEach(filmEntity -> filmEntity.getOrders().add(orderEntity));
 
-        UserEntity user = userService.findByUsername(username);
-        OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setUser(user);
-        orderEntity.setPrice(price);
-        filmEntitySet.stream().forEach(filmEntity -> orderEntity.getFilms().add(filmEntity));
-        filmEntitySet.stream().forEach(filmEntity -> filmEntity.getOrders().add(orderEntity));
-
-        filmEntitySet.clear();
-        orderService.saveOrder(orderEntity);
-        return "redirect:/";
+            filmEntitySet.clear();
+            orderService.saveOrder(orderEntity);
+            return "redirect:/";
+        } else {
+            return "errors/noOrders";
+        }
     }
 
     @GetMapping("/showUserOrders/{username}")

@@ -35,7 +35,8 @@ CREATE table orders
 (
     order_id int(11)     NOT NULL AUTO_INCREMENT,
     username varchar(45) NOT NULL,
-    price    varchar(5)  NOT NULL,
+    price    double(5,2)  NOT NULL,
+    date  TIMESTAMP(6)  NOT NULL,
     PRIMARY KEY (order_id),
     UNIQUE KEY uni_username_order (order_id, username),
     KEY fk_username_idx_order (username),
@@ -60,6 +61,9 @@ INSERT INTO users(username, password, mobile, enabled)
 VALUES ('alex', '1234', '9876543210', true);
 INSERT INTO users(username, password, mobile, enabled)
 VALUES ('q', 'q', '8877543323', true);
+INSERT INTO users(username, password, mobile, enabled)
+VALUES ('w', 'w', '272727282', true);
+
 
 INSERT INTO user_roles (username, role)
 VALUES ('liza', 'ROLE_USER');
@@ -69,6 +73,8 @@ INSERT INTO user_roles (username, role)
 VALUES ('alex', 'ROLE_USER');
 INSERT INTO user_roles (username, role)
 VALUES ('q', 'ROLE_USER');
+INSERT INTO user_roles (username, role)
+VALUES ('w', 'ROLE_ADMIN');
 
 ALTER TABLE orders
     AUTO_INCREMENT = 1;
@@ -81,3 +87,4 @@ ALTER TABLE orders
 # drop table order_item;
 
 # drop table orders
+

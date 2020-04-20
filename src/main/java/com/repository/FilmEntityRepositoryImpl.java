@@ -4,8 +4,8 @@ import com.entity.FilmEntity;
 import com.entity.OrderEntity;
 import com.kinogo.Film;
 import com.kinogo.MainKinogoParse;
+import com.model.DescriptionWork;
 import com.model.PaginationResult;
-import com.service.SecurityServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -15,14 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
 @Repository
 @Transactional
 public class FilmEntityRepositoryImpl implements FilmEntityRepository {
-    private static final Logger logger = LogManager.getLogger(SecurityServiceImpl.class);
-    private static List<Film> filmList = new ArrayList<>();
+    private static final Logger logger = LogManager.getLogger(FilmEntityRepositoryImpl.class);
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -37,10 +37,7 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
     @Override
     public List<Film> parse(int num) throws Exception {
         List<Film> parse = mainKinogoParse.parse(num);
-        for (Film film : parse) {
-            filmList.add(film);
-        }
-        removeDublicates(filmList);
+        putFilmnameDescrToFile(parse);
         return parse;
     }
 
@@ -107,18 +104,38 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
     }
 
     @Override
-    public String getFilmDescription(FilmEntity filmEntity) {
+    public String getFilmDescription(FilmEntity filmEntity) throws IOException {
         String description = null;
-        String nameEntity = filmEntity.getName();
-        for (Film filmFromList : filmList) {
-            if (filmFromList.getName().equals(nameEntity)) {
-                description = filmFromList.getDescription();
-                if (description == null || description.isEmpty()) {
+        DescriptionWork descriptionWork = new DescriptionWork();
+        Map<String, String> map = descriptionWork.readFromFile();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            String filmName = filmEntity.getName();
+            int colonIndex = filmName.indexOf(":");
+            if (colonIndex != -1) {
+                String filmNameNoColon = filmName.substring(0, colonIndex).concat(filmName.substring(colonIndex + 1, filmName.length()));
+                if (entry.getKey().equals(filmNameNoColon)) {
+                    description = entry.getValue();
+                    break;
+                }
+            } else {
+                if (entry.getKey().equals(filmName)) {
+                    description = entry.getValue();
+                    break;
+                } else {
                     description = "Sorry, no information";
                 }
             }
         }
         return description;
+    }
+
+    public void putFilmnameDescrToFile(List<Film> films) {
+        Map<String, String> map = new HashMap<>();
+        for (Film film : films) {
+            map.put(film.getName(), film.getDescription());
+        }
+        DescriptionWork dw = new DescriptionWork(map);
+        dw.writeToFile(map);
     }
 
     @Override
@@ -130,14 +147,5 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
         }
         getSession().delete(filmById);
 
-    }
-
-    private List<Film> removeDublicates(List<Film> filmList) {
-        Set<Film> set = new LinkedHashSet<>();
-        set.addAll(filmList);
-        filmList.clear();
-        filmList.addAll(set);
-
-        return filmList;
     }
 }

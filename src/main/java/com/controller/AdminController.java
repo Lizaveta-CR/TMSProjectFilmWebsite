@@ -1,18 +1,22 @@
 package com.controller;
 
 import com.entity.FilmEntity;
+import com.entity.OrderEntity;
+import com.entity.UserEntity;
+import com.model.PaginationResult;
 import com.service.FilmEntityService;
 import com.kinogo.Film;
+import com.service.OrderService;
 import com.validator.FilmPriceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -22,6 +26,9 @@ public class AdminController {
 
     @Autowired
     FilmPriceValidator filmPriceValidator;
+
+    @Autowired
+    OrderService orderService;
 
     @GetMapping("/getFilmsFromSite")
     public String getReloadPage(@RequestParam String filmNum, HttpServletRequest httpServletRequest) throws Exception {
@@ -36,28 +43,27 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/getAllOrdersFromStore")
+    public String getAllFilmsFromStore(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
+        final int maxResult = 5;
+        final int maxNavigationPage = 10;
+
+        PaginationResult<OrderEntity> orders = orderService.getAll(page, maxResult, maxNavigationPage);
+        model.addAttribute("orders", orders);
+        return "adminOrders";
+    }
+
     @GetMapping("/delete/{id}")
     public String deleteFilm(@PathVariable int id) {
         filmService.delete(id);
         return "redirect:/getAllFilmsFromStore";
     }
 
-//    @GetMapping("/edit/{id}")
-//    public String editFilmPrice(@PathVariable int id, Model m) {
-//        FilmEntity filmById = filmService.getFilmById(id);
-//        m.addAttribute("film", filmById);
-////        List<FilmEntity> filmList = filmService.getAll();
-////        m.addAttribute("filmList", filmList);
-//        return "filmEditForm";
-//    }
-//
-//    @PostMapping("/edit")
-//    public String editSaveFilmPrice(@ModelAttribute("film") FilmEntity filmEntity) {
-////        filmPriceValidator.validate(film, bindingResult);
-////        if (bindingResult.hasErrors()) {
-////            return "filmEditForm";
-////        }
-//        filmService.update(filmEntity);
-//        return "redirect:/getAllFilmsFromStore";
-//    }
+    @GetMapping("/statistics")
+    public String ordersStatistics(Model model) {
+        Map<UserEntity, Double> statistics = orderService.getStatistics();
+
+        model.addAttribute("statistics", statistics);
+        return "statistics";
+    }
 }

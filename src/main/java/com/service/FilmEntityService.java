@@ -4,6 +4,7 @@ import com.entity.FilmEntity;
 import com.kinogo.Film;
 import com.model.PaginationResult;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,7 +21,7 @@ public interface FilmEntityService {
 
     FilmEntity getFilmById(long id);
 
-    String getFilmDescription(FilmEntity filmEntity);
+    String getFilmDescription(FilmEntity filmEntity) throws IOException;
 
 
 }

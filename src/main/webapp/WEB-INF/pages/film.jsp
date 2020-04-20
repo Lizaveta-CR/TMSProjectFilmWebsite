@@ -29,7 +29,6 @@
             </security:authorize>
         </tr>
         <c:forEach items="${films.list}" var="film">
-            <div class="product-preview-container">
                 <tr>
                     <td>${film.name}</td>
                     <td>${film.year}</td>
@@ -46,7 +45,6 @@
                         <td><a href="/description/${film.film_id}"><spring:message code="lbl.viewDescription"/></a></td>
                     </security:authorize>
                 </tr>
-            </div>
         </c:forEach>
     </table>
     <a href="/"><spring:message code="lbl.exit"/></a>

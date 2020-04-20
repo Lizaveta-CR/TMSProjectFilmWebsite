@@ -15,15 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 @Transactional
 public class OrderRepositoryImpl implements OrderRepository {
-    private static final Logger logger = LogManager.getLogger(SecurityServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(OrderRepositoryImpl.class);
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -74,5 +72,25 @@ public class OrderRepositoryImpl implements OrderRepository {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public PaginationResult<OrderEntity> getAll(int page, int maxResult, int maxNavigationPage) {
+        Query query = getSession().createQuery("from OrderEntity");
+
+        logger.info("GetAllPagination Orders method was successfully done");
+        return new PaginationResult<OrderEntity>(query, page, maxResult, maxNavigationPage);
+    }
+
+    @Override
+    public Map<UserEntity, Double> getStatistics() {
+        Map<UserEntity, Double> userEntityDoubleMap = new HashMap<>();
+        List<Object[]> fromDatabaseNameTotalPrice = getSession().createQuery("select o.user as name,sum ( o.price ) as totalprice from OrderEntity o group by o.user")
+                .getResultList();
+        for (Object[] objects : fromDatabaseNameTotalPrice) {
+            userEntityDoubleMap.put((UserEntity) objects[0], (Double) objects[1]);
+        }
+
+        return userEntityDoubleMap;
     }
 }

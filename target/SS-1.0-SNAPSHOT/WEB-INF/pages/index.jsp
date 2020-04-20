@@ -15,8 +15,7 @@
     <a href="/login"><spring:message code="lbl.helloLogin"/></a>
     <a href="/registration"><spring:message code="lbl.helloRegister"/></a>&nbsp;&nbsp;&nbsp;
 </security:authorize>
-
-<security:authorize access="hasRole('ROLE_USER')">
+<security:authorize access="isAuthenticated()">
     <c:url value="/logout" var="logoutUrl"/>
     <form action="${logoutUrl}" method="post" id="logoutForm">
         <input type="hidden" name="${_csrf.parameterName}"
@@ -34,12 +33,16 @@
                 href="javascript:formSubmit()"> <spring:message code="lbl.logout"/></a>
         </h2>
     </c:if>
+</security:authorize>
+<security:authorize access="hasRole('ROLE_USER')">
     <a href="/getAllFilmsFromStore"> <spring:message code="lbl.getFilmsFromStore"/></a>
     <a href="/showUserOrders/${pageContext.request.userPrincipal.name}"> <spring:message code="lbl.myOrders"/></a>
 </security:authorize>
 <security:authorize access="hasRole('ROLE_ADMIN')">
-<a href="/admin">
-        <spring:message code="lbl.adminButton"/>
-    </security:authorize>
+    <a href="/admin"><spring:message code="lbl.adminButton"></spring:message></a>
+</security:authorize>
+<security:authorize access="hasRole('ROLE_ADMIN') and not hasRole('ROLE_USER')">
+    <a href="/getAllFilmsFromStore"> <spring:message code="lbl.getFilmsFromStore"/></a>
+</security:authorize>
 </body>
 </html>

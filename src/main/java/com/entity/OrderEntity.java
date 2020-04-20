@@ -8,7 +8,8 @@ import java.util.*;
 public class OrderEntity {
     private long order_id;
     private UserEntity user;
-    private String price;
+    private double price;
+    private Date date;
     private Set<FilmEntity> films = new HashSet<>(0);
 
     public OrderEntity() {
@@ -25,12 +26,21 @@ public class OrderEntity {
     }
 
     @Column
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Column
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)

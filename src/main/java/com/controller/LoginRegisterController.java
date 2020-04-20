@@ -85,11 +85,6 @@ public class LoginRegisterController {
     @PostMapping("/forgotPass")
     public String forgotPass(@ModelAttribute("mobile") UserEntity userEntity) {
         String mobile = userEntity.getMobile();
-//        Pattern pDigits = Pattern.compile("^[0-9]");
-//        Matcher mDigits = pDigits.matcher(mobile);
-
-
-//        boolean boo = mDigits.find();//доделать "мрммм8876"-на это сработает
         if (mobile.matches("^[0-9]*$")) {
             try {
                 UserEntity user = userService.findByMobile(userEntity.getMobile());

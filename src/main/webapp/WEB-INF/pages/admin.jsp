@@ -9,28 +9,12 @@
     <title>Admin Dashboard</title>
 </head>
 <body>
-<c:url value="/logout" var="logoutUrl"/>
-<form action="${logoutUrl}" method="post" id="logoutForm">
-    <input type="hidden" name="${_csrf.parameterName}"
-           value="${_csrf.token}"/>
-</form>
-<script>
-    function formSubmit() {
-        document.getElementById("logoutForm").submit();
-    }
-</script>
-
-<c:if test="${pageContext.request.userPrincipal.name != null}">
-    <h2>
-        <spring:message code="lbl.welcome"/> : ${pageContext.request.userPrincipal.name} | <a
-            href="javascript:formSubmit()"> <spring:message code="lbl.logout"/></a>
-    </h2>
-</c:if>
 <form action="/admin/getFilmsFromSite" method="GET">
     <label for="filmNum"><spring:message code="lbl.numberOfFilms"/>(1-5):</label>
     <input type="number" id="filmNum" name="filmNum" min="1" max="5">
     <input name="submit" type="submit" value="<spring:message code="lbl.parsePage"/>"/>
 </form>
 <a href="/"><spring:message code="lbl.exit"/></a>
+<a href="/admin/getAllOrdersFromStore"> <spring:message code="lbl.adminUserOrdersTitle"/></a>
 </body>
 </html>

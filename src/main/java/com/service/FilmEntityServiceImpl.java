@@ -8,6 +8,7 @@ import com.kinogo.Film;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -46,7 +47,7 @@ public class FilmEntityServiceImpl implements FilmEntityService {
     }
 
     @Override
-    public String getFilmDescription(FilmEntity filmEntity) {
+    public String getFilmDescription(FilmEntity filmEntity) throws IOException {
         return filmEntityRepository.getFilmDescription(filmEntity);
     }
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -35,5 +36,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Set<FilmEntity> getFilmsByOrder(long orderEntityId) {
         return orderRepository.getFilmsByOrder(orderEntityId);
+    }
+
+    @Override
+    public PaginationResult<OrderEntity> getAll(int page, int maxResult, int maxNavigationPage) {
+        return orderRepository.getAll(page, maxResult, maxNavigationPage);
+    }
+
+    @Override
+    public Map<UserEntity, Double> getStatistics() {
+        return orderRepository.getStatistics();
     }
 }
