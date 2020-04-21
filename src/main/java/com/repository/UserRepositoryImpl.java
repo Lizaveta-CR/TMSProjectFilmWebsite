@@ -96,4 +96,14 @@ public class UserRepositoryImpl implements UserRepository {
     public void save(UserRole role) {
         getSession().persist(role);
     }
+
+    @Override
+    public void update(UserEntity user) {
+        getSession().saveOrUpdate(user);
+    }
+
+    @Override
+    public void update(UserRole role) {
+        getSession().saveOrUpdate(role);
+    }
 }

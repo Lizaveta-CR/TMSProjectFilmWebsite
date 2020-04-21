@@ -22,4 +22,8 @@ public interface UserRepository {
     void save(UserEntity user);
 
     void save(UserRole role);
+
+    void update(UserEntity user);
+
+    void update(UserRole role);
 }

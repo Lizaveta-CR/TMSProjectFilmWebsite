@@ -11,17 +11,34 @@
 <html>
 <head>
     <title>All users in system </title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        table#t01 {
+            width: 100%;
+            background-color: #f1f1c1;
+        }
+    </style>
 </head>
 <body>
 <h2><spring:message code="lbl.allUsersTitle"/></h2>
-<table border="1" style="width:100%">
+<table id="t01" style="width:100%">
+    <tr>
+        <th><spring:message code="lbl.loginUser"/>,<spring:message code="lbl.role"/></th>
+        <th><spring:message code="lbl.add"/></th>
+    </tr>
     <c:forEach items="${users.iterator()}" var="user">
         <tr>
-            <th><spring:message code="lbl.loginUser"/>,<spring:message code="lbl.role"/></th>
-        </tr>
-        <tr>
             <td>${user.username}</td>
-            &nbsp
+            <td><a href="/admin/addAdmin/${user.username}"><spring:message code="lbl.add"/></a></td>
         </tr>
         <c:forEach items="${user.userRole}" var="role">
             <tr>

@@ -1,7 +1,6 @@
 package com.service;
 
 import com.entity.*;
-import com.model.PaginationResult;
 import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +31,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void update(UserEntity user) {
+        userRepository.update(user);
+    }
+
+    @Override
     public UserEntity findByUsername(String username) {
         return userRepository.findByUserName(username);
     }
@@ -49,5 +53,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<UserRole> getRolesByUser(String username) {
         return userRepository.getRolesByUser(username);
+    }
+
+    @Override
+    public void makeAdmin(UserEntity userEntity) {
+        UserRole userRole = new UserRole();
+        userRole.setRole("ROLE_ADMIN");
+        userEntity.getUserRole().add(userRole);
+
+        userRepository.update(userEntity);
+        userRole.setUser(userEntity);
+        userRepository.update(userRole);
     }
 }

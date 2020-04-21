@@ -20,6 +20,9 @@
             <th><spring:message code="lbl.priceToPay"/></th>
             <td>${order.price}</td>
             &nbsp
+            <c:if test="${empty order.films}">
+            <td><spring:message code="lbl.filmnotavailable"/></td>
+            </c:if>
             <c:forEach items="${order.films}" var="film">
         <tr>
             <td>${film.name}</td>

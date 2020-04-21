@@ -3,6 +3,7 @@ package com.controller;
 import com.entity.FilmEntity;
 import com.entity.OrderEntity;
 import com.entity.UserEntity;
+import com.entity.UserRole;
 import com.model.PaginationResult;
 import com.service.FilmEntityService;
 import com.kinogo.Film;
@@ -71,11 +72,24 @@ public class AdminController {
         return "statistics";
     }
 
-    @GetMapping("/addAdmin")
-    public String addAdmin(Model model) {
+    @GetMapping("/allUsers")
+    public String allUsers(Model model) {
         List<UserEntity> users = userService.getAll();
         users.stream().forEach(userEntity -> userEntity.setUserRole(userService.getRolesByUser(userEntity.getUsername())));
         model.addAttribute("users", users);
         return "allUsers";
+    }
+
+    @GetMapping("/addAdmin/{username}")
+    public String addAdmin(@PathVariable("username") String username, Model model) {
+        UserEntity byUsername = userService.findByUsername(username);
+        for (UserRole userRole : byUsername.getUserRole()) {
+            if (userRole.getRole().equals("ROLE_ADMIN")) {
+                model.addAttribute("user", byUsername);
+                return "errors/errorAdminAlready";
+            }
+        }
+        userService.makeAdmin(byUsername);
+        return "redirect:/admin/allUsers";
     }
 }

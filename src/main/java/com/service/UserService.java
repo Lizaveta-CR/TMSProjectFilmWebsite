@@ -12,6 +12,8 @@ import java.util.Set;
 public interface UserService {
     void save(UserEntity user);
 
+    void update(UserEntity user);
+
     UserEntity findByUsername(String username);
 
     UserEntity findByMobile(String mobile);
@@ -19,5 +21,7 @@ public interface UserService {
     List<UserEntity> getAll();
 
     Set<UserRole> getRolesByUser(String username);
+
+    void makeAdmin(UserEntity userEntity);
 
 }
