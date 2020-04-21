@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class DescriptionWork {
     private Map<String, String> map;
-    private static final String FILE_PATH = "/Users/elizaveta/Downloads/SS/src/main/resources/descriptionFile";
+    private static final String FILE_PATH = "/Users/elizaveta/Downloads/SS/src/main/resources/filmsResources/descriptionFile";
 
     public DescriptionWork() {
     }

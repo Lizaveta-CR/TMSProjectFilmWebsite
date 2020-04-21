@@ -30,6 +30,7 @@
 </head>
 <body>
 <h2><spring:message code="lbl.allUsersTitle"/></h2>
+<a href="/"><spring:message code="lbl.exit"/></a>
 <table id="t01" style="width:100%">
     <tr>
         <th><spring:message code="lbl.loginUser"/>,<spring:message code="lbl.role"/></th>

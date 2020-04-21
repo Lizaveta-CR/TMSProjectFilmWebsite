@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.*;
 
-
 @Controller
 public class MainController {
     private Set<FilmEntity> filmEntitySet = new HashSet<>();
@@ -104,19 +103,24 @@ public class MainController {
     }
 
     @GetMapping("/confirmOrder/{username}/{price}")
-    public String confirmOrder(@PathVariable String username, @PathVariable String price) {
+    public String confirmOrder(@PathVariable String username, @PathVariable String price, Model model) {
+        Map<String, String> nameLink = new HashMap<>();
         if (!filmEntitySet.isEmpty()) {
             UserEntity user = userService.findByUsername(username);
             OrderEntity orderEntity = new OrderEntity();
             orderEntity.setUser(user);
             orderEntity.setPrice(Double.parseDouble(price));
             orderEntity.setDate(new Date());
-            filmEntitySet.stream().forEach(filmEntity -> orderEntity.getFilms().add(filmEntity));
+            filmEntitySet.stream().forEach(filmEntity -> {
+                orderEntity.getFilms().add(filmEntity);
+                nameLink.put(filmEntity.getName(), filmEntity.getLink());
+            });
             filmEntitySet.stream().forEach(filmEntity -> filmEntity.getOrders().add(orderEntity));
 
             filmEntitySet.clear();
             orderService.saveOrder(orderEntity);
-            return "redirect:/";
+            model.addAttribute("nameLink", nameLink);
+            return "linkPage";
         } else {
             return "errors/noOrders";
         }
@@ -131,7 +135,6 @@ public class MainController {
             ordersByUsername.stream().forEach(orderEntity -> {
                 orderEntity.setFilms(orderService.getFilmsByOrder(orderEntity.getOrder_id()));
             });
-
             model.addAttribute("orders", ordersByUsername);
             return "userOrders";
         } catch (NullPointerException e) {

@@ -27,24 +27,28 @@
             <security:authorize access="hasRole('ROLE_ADMIN')">
                 <th><spring:message code="lbl.delete"/></th>
             </security:authorize>
+            <security:authorize access="hasRole('ROLE_USER')">
+                <th><spring:message code="lbl.buy"/></th>
+                <th><spring:message code="lbl.viewDescription"/></th>
+            </security:authorize>
         </tr>
         <c:forEach items="${films.list}" var="film">
-                <tr>
-                    <td>${film.name}</td>
-                    <td>${film.year}</td>
-                    <td>${film.quality}</td>
-                    <td>${film.translation}</td>
-                    <td>${film.continuance}</td>
-                    <td>${film.date}</td>
-                    <td>${film.price}</td>
-                    <security:authorize access="hasRole('ROLE_ADMIN')">
-                        <td><a href="/admin/delete/${film.film_id}"><spring:message code="lbl.delete"/></a></td>
-                    </security:authorize>
-                    <security:authorize access="hasRole('ROLE_USER')">
-                        <td><a href="/buy/${film.film_id}"><spring:message code="lbl.buy"/></a></td>
-                        <td><a href="/description/${film.film_id}"><spring:message code="lbl.viewDescription"/></a></td>
-                    </security:authorize>
-                </tr>
+            <tr>
+                <td>${film.name}</td>
+                <td>${film.year}</td>
+                <td>${film.quality}</td>
+                <td>${film.translation}</td>
+                <td>${film.continuance}</td>
+                <td>${film.date}</td>
+                <td>${film.price}</td>
+                <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <td><a href="/admin/delete/${film.film_id}"><spring:message code="lbl.delete"/></a></td>
+                </security:authorize>
+                <security:authorize access="hasRole('ROLE_USER')">
+                    <td><a href="/buy/${film.film_id}"><spring:message code="lbl.buy"/></a></td>
+                    <td><a href="/description/${film.film_id}"><spring:message code="lbl.viewDescription"/></a></td>
+                </security:authorize>
+            </tr>
         </c:forEach>
     </table>
     <a href="/"><spring:message code="lbl.exit"/></a>

@@ -11,6 +11,7 @@ import java.util.Set;
 public class FilmEntity implements Serializable {
     private long film_id;
     private String name;
+    private String link;
     private String year;
     private String quality;
     private String translation;
@@ -94,6 +95,15 @@ public class FilmEntity implements Serializable {
         this.price = price;
     }
 
+    @Column(name = "link")
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "films")
     public Set<OrderEntity> getOrders() {
         return orders;
@@ -117,6 +127,7 @@ public class FilmEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         FilmEntity that = (FilmEntity) o;
         return Objects.equals(name, that.name) &&
+                Objects.equals(link, that.link) &&
                 Objects.equals(year, that.year) &&
                 Objects.equals(quality, that.quality) &&
                 Objects.equals(translation, that.translation) &&
@@ -128,6 +139,6 @@ public class FilmEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, year, quality, translation, continuance, date, price, orders);
+        return Objects.hash(name, link, year, quality, translation, continuance, date, price, orders);
     }
 }
