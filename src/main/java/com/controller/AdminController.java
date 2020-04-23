@@ -11,12 +11,13 @@ import com.service.OrderService;
 import com.service.UserService;
 import com.validator.FilmPriceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -109,5 +110,39 @@ public class AdminController {
         }
         userService.deleteAuthority(byUsername);
         return "redirect:/admin/allUsers";
+    }
+
+    @GetMapping("/changePrice/{filmId}")
+    public String changePricePage(@PathVariable String filmId, Model model) {
+        FilmEntity filmById = filmService.getFilmById(Integer.parseInt(filmId));
+        model.addAttribute("film", filmById);
+        return "changePrice";
+    }
+
+    @PostMapping("/changePrice")
+    public String changePrice(@ModelAttribute("film") FilmEntity filmForm, BindingResult bindingResult) {
+        filmPriceValidator.validate(filmForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "changePrice";
+        }
+        String price = filmForm.getPrice();
+        FilmEntity filmById = filmService.getFilmById(filmForm.getFilm_id());
+        if (price.equals("0.0") || price.equals("0,0") || price.equals("0")) {
+            filmById.setPrice("free");
+        } else {
+            try {
+                Double doublePrice = Double.valueOf(filmForm.getPrice());
+                DecimalFormat df = new DecimalFormat("0.00");
+                filmById.setPrice(df.format(doublePrice));
+            } catch (Exception e) {
+                if (price.length() <= 3) {
+                    price = price + "0";
+                }
+                filmById.setPrice(price);
+            }
+        }
+        filmService.save(filmById);
+        return "redirect:/getAllFilmsFromStore";
     }
 }

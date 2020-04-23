@@ -37,6 +37,11 @@ public class FilmEntityServiceImpl implements FilmEntityService {
     }
 
     @Override
+    public void save(FilmEntity filmEntity) {
+        filmEntityRepository.save(filmEntity);
+    }
+
+    @Override
     public PaginationResult<FilmEntity> getAll(int page, int maxResult, int maxNavigationPage) {
         return filmEntityRepository.getAll(page, maxResult, maxNavigationPage);
     }

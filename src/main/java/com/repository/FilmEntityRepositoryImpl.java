@@ -153,4 +153,9 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
         getSession().delete(filmById);
         logger.info("Film was deleted. Film details =" + filmById);
     }
+
+    @Override
+    public void save(FilmEntity filmEntity) {
+        getSession().saveOrUpdate(filmEntity);
+    }
 }

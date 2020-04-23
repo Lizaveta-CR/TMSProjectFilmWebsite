@@ -23,4 +23,6 @@ public interface FilmEntityRepository {
     String getFilmDescription(FilmEntity filmEntity) throws IOException;
 
     void delete(long id);
+
+    void save(FilmEntity filmEntity);
 }

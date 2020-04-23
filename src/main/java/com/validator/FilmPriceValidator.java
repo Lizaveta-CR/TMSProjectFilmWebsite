@@ -21,19 +21,39 @@ public class FilmPriceValidator implements Validator {
     public void validate(Object o, Errors errors) {
         FilmEntity film = (FilmEntity) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "NotEmpty");
-        if (!priceRegex(film.getPrice())) {
+        if (!priceRegex(film.getPrice())) {//надо еще подумать
             errors.rejectValue("price", "FilmForm.correct.numbers");
-        }
-
-        if (film.getPrice().length() < 2 || film.getPrice().length() > 5) {
-            errors.rejectValue("price", "FilmForm.size");
+        } else {
+            if (film.getPrice().contains(",")) {
+                String price = film.getPrice().replace(",", ".");
+                if (!priceLimits(price)) {
+                    errors.rejectValue("price", "FilmForm.size");
+                }
+            } else {
+                if (!priceLimits(film.getPrice())) {
+                    errors.rejectValue("price", "FilmForm.size");
+                }
+            }
         }
     }
 
     private boolean priceRegex(String price) {
-        Pattern pattern = Pattern.compile("\\d{1,3}(?:[.,]\\d{3})*(?:[.,]\\d{2})?");
+        String regExp = "[0-9]+([,.][0-9]{1,2})?";
+        Pattern pattern = Pattern.compile(regExp);
         Matcher matcher = pattern.matcher(price);
-        return matcher.find();
+        return matcher.matches();
+    }
 
+    private boolean priceLimits(String price) {
+        if (Double.valueOf(price) > 2.10 || Double.valueOf(price) < 0.0) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean containsSpecialChars(String string) {
+        Pattern pSymbols = Pattern.compile("\\W");
+        Matcher mSymbols = pSymbols.matcher(string);
+        return mSymbols.find();
     }
 }

@@ -36,7 +36,9 @@
     <tr>
         <th><spring:message code="lbl.loginUser"/>,<spring:message code="lbl.role"/></th>
         <th><spring:message code="lbl.add"/></th>
-        <th><spring:message code="lbl.delete"/></th>
+        <security:authorize access="hasRole('ROLE_ADMIN') and not hasRole('ROLE_USER')">
+            <th><spring:message code="lbl.delete"/></th>
+        </security:authorize>
     </tr>
     <c:forEach items="${users.iterator()}" var="user">
         <tr>

@@ -26,6 +26,7 @@
             <th><spring:message code="lbl.filmPrice"/></th>
             <security:authorize access="hasRole('ROLE_ADMIN')">
                 <th><spring:message code="lbl.delete"/></th>
+                <th><spring:message code="lbl.changePrice"/></th>
             </security:authorize>
             <security:authorize access="hasRole('ROLE_USER')">
                 <th><spring:message code="lbl.buy"/></th>
@@ -43,6 +44,8 @@
                 <td>${film.price}</td>
                 <security:authorize access="hasRole('ROLE_ADMIN')">
                     <td><a href="/admin/delete/${film.film_id}"><spring:message code="lbl.delete"/></a></td>
+                    <td><a href="/admin/changePrice/${film.film_id}"><spring:message
+                            code="lbl.changePrice"/></a></td>
                 </security:authorize>
                 <security:authorize access="hasRole('ROLE_USER')">
                     <td><a href="/buy/${film.film_id}"><spring:message code="lbl.buy"/></a></td>

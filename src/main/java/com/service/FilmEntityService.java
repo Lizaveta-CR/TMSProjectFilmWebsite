@@ -15,6 +15,8 @@ public interface FilmEntityService {
 
     void saveFilms(List<Film> films, String language) throws Exception;
 
+    void save(FilmEntity filmEntity);
+
     void delete(long id);
 
     PaginationResult<FilmEntity> getAll(int page, int maxResult, int maxNavigationPage);
