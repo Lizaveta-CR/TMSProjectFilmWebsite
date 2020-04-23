@@ -65,6 +65,12 @@
         </div>
     </c:if>
 </security:authorize>
+<button onclick="goBack()"><spring:message code="lbl.comeBack"></spring:message></button>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 </body>
 </html>
 

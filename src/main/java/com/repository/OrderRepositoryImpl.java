@@ -39,6 +39,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public OrderEntity getOrderById(long id) {
         OrderEntity order = (OrderEntity) getSession().get(OrderEntity.class, id);
+        logger.info("Order by id was done. Order details = " + order);
         return order;
     }
 
@@ -50,6 +51,7 @@ public class OrderRepositoryImpl implements OrderRepository {
                 .list();
 
         if (orderEntities.size() > 0) {
+            logger.info("Orders by username were done");
             return orderEntities;
         } else {
             return null;
@@ -68,6 +70,7 @@ public class OrderRepositoryImpl implements OrderRepository {
             filmEntities.addAll(films);
         }
         if (filmEntities.size() > 0) {
+            logger.info("Films by order were done");
             return filmEntities;
         } else {
             return null;
@@ -90,7 +93,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         for (Object[] objects : fromDatabaseNameTotalPrice) {
             userEntityDoubleMap.put((UserEntity) objects[0], (Double) objects[1]);
         }
-
+        logger.info("Statistics was given");
         return userEntityDoubleMap;
     }
 }

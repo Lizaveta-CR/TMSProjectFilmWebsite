@@ -24,4 +24,7 @@ public interface UserService {
 
     void makeAdmin(UserEntity userEntity);
 
+    void deleteAuthority(UserEntity byUsername);
+
+//    boolean checkOnlyAdminRole(UserEntity byUsernameAdmin);
 }

@@ -65,4 +65,20 @@ public class UserServiceImpl implements UserService {
         userRole.setUser(userEntity);
         userRepository.update(userRole);
     }
+
+    @Override
+    public void deleteAuthority(UserEntity byUsername) {
+        userRepository.deleteAuthority(byUsername);
+    }
+//
+//    @Override
+//    public boolean checkOnlyAdminRole(UserEntity byUsernameAdmin) {
+//        Set<UserRole> userRole = byUsernameAdmin.getUserRole();
+//        for (UserRole role : userRole) {
+//            if (role.equals("ROLE_USER")) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 }

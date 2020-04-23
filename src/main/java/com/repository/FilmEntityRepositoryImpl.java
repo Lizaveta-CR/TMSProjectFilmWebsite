@@ -37,7 +37,9 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
     @Override
     public List<Film> parse(int num) throws Exception {
         List<Film> parse = mainKinogoParse.parse(num);
+        logger.info("Films were parsed");
         putFilmnameDescrToFile(parse);
+        logger.info("Films description was written into file");
         return parse;
     }
 
@@ -55,6 +57,7 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
             filmEntities = getSession().createQuery("from FilmEntity where name=?1").setParameter(1, name)
                     .list();
             if (filmEntities.size() > 0) {
+                logger.info("Get Film By FilmName was done");
                 return filmEntities.get(0);
             } else {
                 return null;
@@ -100,6 +103,7 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
     @Override
     public FilmEntity getFilmById(long id) {
         FilmEntity film = (FilmEntity) getSession().get(FilmEntity.class, id);
+        logger.info("Film by id was done. Film details = " + film);
         return film;
     }
 
@@ -126,6 +130,7 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
                 }
             }
         }
+        logger.info("Films' description was read");
         return description;
     }
 
@@ -146,6 +151,6 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
             order.removeFilm(filmById);
         }
         getSession().delete(filmById);
-
+        logger.info("Film was deleted. Film details =" + filmById);
     }
 }

@@ -26,4 +26,6 @@ public interface UserRepository {
     void update(UserEntity user);
 
     void update(UserRole role);
+
+    void deleteAuthority(UserEntity byUsername);
 }

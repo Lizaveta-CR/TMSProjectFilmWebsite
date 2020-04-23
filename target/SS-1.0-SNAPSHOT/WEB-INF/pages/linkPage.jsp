@@ -13,10 +13,11 @@
     <title>Order Confirmed</title>
 </head>
 <body>
-<spring:message code="lbl.orderConfirmedTitle"></spring:message>
+<h1><spring:message code="lbl.orderConfirmedTitle"></spring:message></h1>
 <c:forEach items="${nameLink}" var="entry">
 <p> <spring:message code="lbl.filmName"></spring:message>: ${entry.key}, <spring:message
         code="lbl.link"></spring:message>: ${entry.value}<p>
     </c:forEach>
+    <a href="/getAllFilmsFromStore"><spring:message code="lbl.exit"></spring:message>
 </body>
 </html>

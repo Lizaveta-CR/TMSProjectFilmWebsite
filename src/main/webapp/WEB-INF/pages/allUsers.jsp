@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <html>
 <head>
     <title>All users in system </title>
@@ -35,11 +36,15 @@
     <tr>
         <th><spring:message code="lbl.loginUser"/>,<spring:message code="lbl.role"/></th>
         <th><spring:message code="lbl.add"/></th>
+        <th><spring:message code="lbl.delete"/></th>
     </tr>
     <c:forEach items="${users.iterator()}" var="user">
         <tr>
             <td>${user.username}</td>
             <td><a href="/admin/addAdmin/${user.username}"><spring:message code="lbl.add"/></a></td>
+            <security:authorize access="hasRole('ROLE_ADMIN') and not hasRole('ROLE_USER')">
+                <td><a href="/admin/deleteAdmin/${user.username}"><spring:message code="lbl.deleteAdminAuthority"/></a></td>
+            </security:authorize>
         </tr>
         <c:forEach items="${user.userRole}" var="role">
             <tr>

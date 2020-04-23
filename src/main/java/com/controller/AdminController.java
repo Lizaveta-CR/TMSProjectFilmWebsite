@@ -11,6 +11,7 @@ import com.service.OrderService;
 import com.service.UserService;
 import com.validator.FilmPriceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -90,6 +92,22 @@ public class AdminController {
             }
         }
         userService.makeAdmin(byUsername);
+        return "redirect:/admin/allUsers";
+    }
+
+    @GetMapping("/deleteAdmin/{username}")
+    public String deleteAdmin(@PathVariable("username") String username, Model model) {
+        UserEntity byUsername = userService.findByUsername(username);
+        Set<UserRole> userRole = byUsername.getUserRole();
+        if (userRole.size() == 1) {
+            if (userRole.iterator().next().getRole().equals("ROLE_ADMIN")) {
+                model.addAttribute("errorMessage", "Can't delete this admin!");
+            } else {
+                model.addAttribute("errorMessage", "No admin authorities");
+            }
+            return "errors/errorAdminAlready";
+        }
+        userService.deleteAuthority(byUsername);
         return "redirect:/admin/allUsers";
     }
 }

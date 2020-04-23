@@ -8,15 +8,8 @@ import java.util.Set;
 
 public class OrderCart {
     private double totalPrice = 0;
+
     public OrderCart() {
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public double buildTotalPrice(Set<FilmEntity> filmEntitySet) {
@@ -32,5 +25,13 @@ public class OrderCart {
             }
         });
         return totalPrice;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

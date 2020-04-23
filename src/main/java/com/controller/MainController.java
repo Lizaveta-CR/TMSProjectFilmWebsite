@@ -60,7 +60,6 @@ public class MainController {
         filmEntitySet.add(filmEntityService.getFilmByFilmName(filmById.getName()));
         OrderCart orderCart = new OrderCart();
         double totalPrice = orderCart.buildTotalPrice(filmEntitySet);
-
         model.addAttribute("user", user);
         model.addAttribute("film", filmEntitySet);
         model.addAttribute("price", totalPrice);

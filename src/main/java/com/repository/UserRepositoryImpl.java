@@ -37,13 +37,13 @@ public class UserRepositoryImpl implements UserRepository {
 
         users = getSession().createQuery("from UserEntity where username=?1").setParameter(1, username)
                 .list();
-
         if (users.size() > 0) {
+            logger.info("User was found by name");
             return users.get(0);
         } else {
+            logger.info("User was not found by name");
             return null;
         }
-
     }
 
     @Override
@@ -52,10 +52,11 @@ public class UserRepositoryImpl implements UserRepository {
 
         mobiles = getSession().createQuery("from UserEntity where mobile=?1").setParameter(1, mobile)
                 .list();
-
         if (mobiles.size() > 0) {
+            logger.info("User was found by mobile");
             return mobiles.get(0);
         } else {
+            logger.info("User was not found by mobile");
             return null;
         }
     }
@@ -80,6 +81,7 @@ public class UserRepositoryImpl implements UserRepository {
             userRoles.addAll(films);
         }
         if (userRoles.size() > 0) {
+            logger.info("Roles were found by user");
             return userRoles;
         } else {
             return null;
@@ -95,15 +97,30 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void save(UserRole role) {
         getSession().persist(role);
+        logger.info("UserRole was successfully saved. User details =" + role);
     }
 
     @Override
     public void update(UserEntity user) {
         getSession().saveOrUpdate(user);
+        logger.info("User was successfully updated. User details =" + user);
     }
 
     @Override
     public void update(UserRole role) {
         getSession().saveOrUpdate(role);
+        logger.info("UserRole was successfully updated. User details =" + role);
+    }
+
+    @Override
+    public void deleteAuthority(UserEntity byUsername) {
+        Set<UserRole> userRole = byUsername.getUserRole();
+        for (UserRole role : userRole) {
+            if (role.getRole().equals("ROLE_ADMIN")) {
+                byUsername.removeRole(role);
+                getSession().delete(role);
+                getSession().update(byUsername);
+            }
+        }
     }
 }

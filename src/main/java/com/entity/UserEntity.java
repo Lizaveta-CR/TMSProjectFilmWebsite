@@ -88,4 +88,26 @@ public class UserEntity {
     public void addOrder(OrderEntity orderEntity) {
         orders.add(orderEntity);
     }
+
+    public void removeRole(UserRole role) {
+        userRole.remove(role);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return enabled == that.enabled &&
+                Objects.equals(username, that.username) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(mobile, that.mobile) &&
+                Objects.equals(userRole, that.userRole) &&
+                Objects.equals(orders, that.orders);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, mobile, enabled, userRole, orders);
+    }
 }
