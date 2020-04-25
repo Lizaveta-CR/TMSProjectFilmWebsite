@@ -12,6 +12,13 @@
 <html>
 <head>
     <title>Change price</title>
+    <style>
+        .error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+    </style>
 </head>
 <body>
 <form:form action="/admin/changePrice" method="post" modelAttribute="film">

@@ -2,8 +2,8 @@ package com.repository;
 
 import com.entity.FilmEntity;
 import com.entity.OrderEntity;
-import com.kinogo.Film;
-import com.kinogo.MainKinogoParse;
+import com.FilmStorageKinogo.Film;
+import com.FilmStorageKinogo.MainKinogoParse;
 import com.model.DescriptionWork;
 import com.model.PaginationResult;
 import org.apache.log4j.LogManager;

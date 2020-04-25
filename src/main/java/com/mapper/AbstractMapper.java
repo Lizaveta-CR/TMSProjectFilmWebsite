@@ -1,8 +1,7 @@
 package com.mapper;
 
 import com.entity.FilmEntity;
-import com.kinogo.Film;
-import org.modelmapper.Converter;
+import com.FilmStorageKinogo.Film;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 

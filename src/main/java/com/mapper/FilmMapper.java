@@ -1,7 +1,7 @@
 package com.mapper;
 
 import com.entity.FilmEntity;
-import com.kinogo.Film;
+import com.FilmStorageKinogo.Film;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

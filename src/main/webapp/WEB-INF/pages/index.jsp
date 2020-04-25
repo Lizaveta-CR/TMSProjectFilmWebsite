@@ -1,19 +1,25 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" language="java" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%--<%@page session="false" %>--%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <html>
 <body>
 <head>
     <title>Shop Page</title>
+    <style>
+        p {
+            border: 1px solid red;
+            padding: 10px;
+        }
+    </style>
 </head>
 <security:authorize access="isAnonymous()">
     <a href="${pageContext.request.contextPath}/?lang=en">English</a>&nbsp;&nbsp;&nbsp;
     <a href="${pageContext.request.contextPath}/?lang=ru">Русский</a>&nbsp;&nbsp;&nbsp;
     <h1><spring:message code="lbl.helloTitle"/></h1>
     <a href="/login"><spring:message code="lbl.helloLogin"/></a>
-    <a href="/registration"><spring:message code="lbl.helloRegister"/></a>&nbsp;&nbsp;&nbsp;
+    <a href="/registration"><spring:message code="lbl.helloRegister"/></a>&nbsp;&nbsp;
 </security:authorize>
 <security:authorize access="isAuthenticated()">
     <c:url value="/logout" var="logoutUrl"/>
@@ -28,7 +34,7 @@
     </script>
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">
-        <h2>
+        <h2 style="color:blue;">
             <spring:message code="lbl.welcome"/>, ${pageContext.request.userPrincipal.name} | <a
                 href="javascript:formSubmit()"> <spring:message code="lbl.logout"/></a>
         </h2>

@@ -1,4 +1,4 @@
-package com.kinogo;
+package com.FilmStorageKinogo;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

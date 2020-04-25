@@ -18,8 +18,8 @@
 <form:form method="POST" modelAttribute="mobile">
     <td><spring:message code="lbl.registerMobile"/>:</td>
     <td><input type='text' name='mobile'></td>
-    <input name="<spring:message code="lbl.submit"/>" type="submit"
-           value="submit"/></td>
+    <input name="<spring:message code="lbl.submit"/>" type="submit" value="submit"/></td>
 </form:form>
+<a href="/"><spring:message code="lbl.exit"/></a>
 </body>
 </html>

@@ -4,7 +4,7 @@ import com.entity.FilmEntity;
 import com.mapper.FilmMapper;
 import com.model.PaginationResult;
 import com.repository.FilmEntityRepository;
-import com.kinogo.Film;
+import com.FilmStorageKinogo.Film;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

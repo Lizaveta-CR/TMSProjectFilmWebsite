@@ -5,7 +5,7 @@
   Time: 18:09
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;encoding=UTF-8" language="java" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -17,7 +17,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Create an account</title>
-<%--    <link href="src/main/webapp/WEB-INF/resources/css/common.css" rel="stylesheet">--%>
+    <style>
+        .error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,7 +37,7 @@
                 <label><spring:message code="lbl.loginUser"/>:</label>
                 <form:input type="text" path="username" class="form-control" placeholder="Username"
                             autofocus="true"></form:input>
-                <form:errors path="username" cssClass="error" cssStyle="animation: alternate"></form:errors>
+                <form:errors path="username" cssClass="error"></form:errors>
             </div>
         </spring:bind>
 
@@ -39,7 +45,7 @@
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <label><spring:message code="lbl.loginPassword"/>:</label>
                 <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
-                <form:errors path="password"></form:errors>
+                <form:errors path="password" cssClass="error"></form:errors>
             </div>
         </spring:bind>
 
@@ -48,14 +54,13 @@
                 <label><spring:message code="lbl.registerMobile"/>:</label>
                 <form:input type="text" path="mobile" class="form-control" placeholder="mobile"
                             autofocus="true"></form:input>
-                <form:errors path="mobile"></form:errors>
+                <form:errors path="mobile" cssClass="error"></form:errors>
             </div>
         </spring:bind>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="lbl.submit"/></button>
     </form:form>
-
+    <p><a href="/login"><spring:message code="lbl.helloLogin"/></a></p>
 </div>
-
 </body>
 </html>

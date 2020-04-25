@@ -6,7 +6,7 @@ import com.entity.UserEntity;
 import com.entity.UserRole;
 import com.model.PaginationResult;
 import com.service.FilmEntityService;
-import com.kinogo.Film;
+import com.FilmStorageKinogo.Film;
 import com.service.OrderService;
 import com.service.UserService;
 import com.validator.FilmPriceValidator;

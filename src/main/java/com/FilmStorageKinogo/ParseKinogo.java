@@ -1,4 +1,4 @@
-package com.kinogo;
+package com.FilmStorageKinogo;
 
 import com.service.SecurityServiceImpl;
 import org.apache.log4j.LogManager;

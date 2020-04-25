@@ -1,7 +1,7 @@
 package com.mapper;
 
 import com.entity.FilmEntity;
-import com.kinogo.Film;
+import com.FilmStorageKinogo.Film;
 
 public interface Mapper<E extends FilmEntity, D extends Film> {
     E toEntity(D dto);
