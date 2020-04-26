@@ -52,6 +52,12 @@ public class UserValidator implements Validator {
         if (user.getMobile().length() < 5 || user.getMobile().length() > 10) {
             errors.rejectValue("mobile", "Size.userForm.mobile");
         }
+        if (userService.findByEmail(user.getEmail()) != null) {
+            errors.rejectValue("email", "Duplicate.userForm.email");
+        }
+        if (!isEmailValid(user.getEmail())) {
+            errors.rejectValue("email", "Email.not.valid");
+        }
     }
 
     private boolean containsSpecialChars(String string) {
@@ -66,5 +72,11 @@ public class UserValidator implements Validator {
         } else {
             return false;
         }
+    }
+
+    private boolean isEmailValid(String email) {
+        Pattern valid_email_regex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = valid_email_regex.matcher(email);
+        return matcher.find();
     }
 }

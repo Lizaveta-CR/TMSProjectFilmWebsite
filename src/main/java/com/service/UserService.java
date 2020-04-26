@@ -18,6 +18,8 @@ public interface UserService {
 
     UserEntity findByMobile(String mobile);
 
+    UserEntity findByEmail(String email);
+
     List<UserEntity> getAll();
 
     Set<UserRole> getRolesByUser(String username);
@@ -26,5 +28,5 @@ public interface UserService {
 
     void deleteAuthority(UserEntity byUsername);
 
-//    boolean checkOnlyAdminRole(UserEntity byUsernameAdmin);
+    void deleteUser(UserEntity user);
 }

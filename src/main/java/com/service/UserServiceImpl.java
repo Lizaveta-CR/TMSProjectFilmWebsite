@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
     public void save(UserEntity user) {
         user.setUsername(user.getUsername());
         user.setPassword(user.getPassword());
+        user.setEmail(user.getEmail());
         user.setEnabled(true);
         userRepository.save(user);
 
@@ -43,6 +44,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity findByMobile(String mobile) {
         return userRepository.findByMobile(mobile);
+    }
+
+    @Override
+    public UserEntity findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
@@ -70,15 +76,9 @@ public class UserServiceImpl implements UserService {
     public void deleteAuthority(UserEntity byUsername) {
         userRepository.deleteAuthority(byUsername);
     }
-//
-//    @Override
-//    public boolean checkOnlyAdminRole(UserEntity byUsernameAdmin) {
-//        Set<UserRole> userRole = byUsernameAdmin.getUserRole();
-//        for (UserRole role : userRole) {
-//            if (role.equals("ROLE_USER")) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
+
+    @Override
+    public void deleteUser(UserEntity user) {
+        userRepository.deleteUser(user);
+    }
 }

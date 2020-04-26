@@ -58,8 +58,18 @@
             </div>
         </spring:bind>
 
+        <spring:bind path="email">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <label><spring:message code="lbl.email"/>:</label>
+                <form:input type="text" path="email" class="form-control" placeholder="email"
+                            autofocus="true"></form:input>
+                <form:errors path="email" cssClass="error"></form:errors>
+            </div>
+        </spring:bind>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="lbl.submit"/></button>
     </form:form>
+    ${helloMessage}
     <p><a href="/login"><spring:message code="lbl.helloLogin"/></a></p>
 </div>
 </body>

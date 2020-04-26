@@ -15,6 +15,8 @@ public interface UserRepository {
 
     UserEntity findByMobile(String mobile);
 
+    UserEntity findByEmail(String email);
+
     List<UserEntity> getAll();
 
     Set<UserRole> getRolesByUser(String username);
@@ -28,4 +30,6 @@ public interface UserRepository {
     void update(UserRole role);
 
     void deleteAuthority(UserEntity byUsername);
+
+    void deleteUser(UserEntity user);
 }

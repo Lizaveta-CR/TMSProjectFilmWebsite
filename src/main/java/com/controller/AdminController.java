@@ -89,6 +89,7 @@ public class AdminController {
         for (UserRole userRole : byUsername.getUserRole()) {
             if (userRole.getRole().equals("ROLE_ADMIN")) {
                 model.addAttribute("user", byUsername);
+                model.addAttribute("errorMessage", "Already.admin");
                 return "errors/errorAdminAlready";
             }
         }

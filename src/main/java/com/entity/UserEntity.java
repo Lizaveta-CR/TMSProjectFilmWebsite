@@ -10,6 +10,7 @@ public class UserEntity {
     private String username;
     private String password;
     private String mobile;
+    private String email;
     private boolean enabled;
     private Set<UserRole> userRole = new HashSet<UserRole>(0);
     private Set<OrderEntity> orders = new HashSet<>(0);
@@ -67,6 +68,15 @@ public class UserEntity {
         this.mobile = mobile;
     }
 
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     public Set<UserRole> getUserRole() {
         return this.userRole;
@@ -89,6 +99,10 @@ public class UserEntity {
         orders.add(orderEntity);
     }
 
+    public void removeOrder(OrderEntity orderEntity) {
+        orders.remove(orderEntity);
+    }
+
     public void removeRole(UserRole role) {
         userRole.remove(role);
     }
@@ -102,12 +116,13 @@ public class UserEntity {
                 Objects.equals(username, that.username) &&
                 Objects.equals(password, that.password) &&
                 Objects.equals(mobile, that.mobile) &&
+                Objects.equals(email, that.email) &&
                 Objects.equals(userRole, that.userRole) &&
                 Objects.equals(orders, that.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password, mobile, enabled, userRole, orders);
+        return Objects.hash(username, password, mobile, email, enabled, userRole, orders);
     }
 }

@@ -62,6 +62,21 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public UserEntity findByEmail(String email) {
+        List<UserEntity> emails = new ArrayList<UserEntity>();
+
+        emails = getSession().createQuery("from UserEntity where email=?1").setParameter(1, email)
+                .list();
+        if (emails.size() > 0) {
+            logger.info("User was found by email");
+            return emails.get(0);
+        } else {
+            logger.info("User was not found by email");
+            return null;
+        }
+    }
+
+    @Override
     public List<UserEntity> getAll() {
         String sql = "from UserEntity";
         List<UserEntity> users = getSession().createQuery(sql).list();
@@ -122,5 +137,18 @@ public class UserRepositoryImpl implements UserRepository {
                 getSession().update(byUsername);
             }
         }
+    }
+
+    @Override
+    public void deleteUser(UserEntity user) {
+        for (UserRole userRole : user.getUserRole()) {
+            user.removeRole(userRole);
+            getSession().delete(userRole);
+        }
+        for (OrderEntity order : user.getOrders()) {
+            user.removeOrder(order);
+            getSession().delete(order);
+        }
+        getSession().delete(user);
     }
 }

@@ -4,6 +4,7 @@ CREATE TABLE users
     password VARCHAR(60) NOT NULL,
     mobile   VARCHAR(30) NOT NULL,
     enabled  TINYINT     NOT NULL DEFAULT 1,
+    email    VARCHAR(60) NOT NULL,
     PRIMARY KEY (username)
 );
 
@@ -56,24 +57,24 @@ CREATE TABLE order_item
         FOREIGN KEY (film_id) REFERENCES films (film_id)
 );
 
-INSERT INTO users(username, password, mobile, enabled)
-VALUES ('liza', '1234', '1234567890', true);
-INSERT INTO users(username, password, mobile, enabled)
+INSERT INTO users(username, password, mobile, enabled, email)
+VALUES ('liza', '1234', '1234567890', true, 'elizaveta.tsvirko@gmail.com');
+# INSERT INTO users(username, password, mobile, enabled);
 
 INSERT INTO user_roles (username, role)
 VALUES ('liza', 'ROLE_USER');
 INSERT INTO user_roles (username, role)
 VALUES ('liza', 'ROLE_ADMIN');
 
-ALTER TABLE orders
-    AUTO_INCREMENT = 1;
-# drop table user_roles
+# ALTER TABLE orders
+#     AUTO_INCREMENT = 1;
+#  drop table user_roles
 
-# drop table users
+#  drop table users;
 
-# drop table films;
+#  drop table films;
 
-# drop table order_item;
+#  drop table order_item;
 
-# drop table orders
+#  drop table orders
 

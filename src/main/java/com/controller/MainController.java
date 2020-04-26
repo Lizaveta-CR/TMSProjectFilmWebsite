@@ -140,4 +140,11 @@ public class MainController {
             return "errors/noOrders";
         }
     }
+
+    @GetMapping("/deleteAccount")
+    public String deleteAccount(Authentication authentication) {
+        UserEntity userEntity = userService.findByUsername(authentication.getName());
+        userService.deleteUser(userEntity);
+        return "login";
+    }
 }
