@@ -25,8 +25,8 @@ public class LoginRegisterController {
     private static final Logger logger = LogManager.getLogger(LoginRegisterController.class);
     private final String host = "smtp.gmail.com";
     private final String port = "587";
-    private final String mailFrom = "elizaveta.tsvirko@gmail.com";
-    private final String password = "690337932";
+    private final String mailFrom = "filmwebsitejava@gmail.com";
+    private final String password = "FilmWebsiteJava2020";
     private String userPassCode = null;
 
     @Autowired
@@ -66,7 +66,7 @@ public class LoginRegisterController {
         try {
             mailer.sendPlainTextEmail(host, port, mailFrom, password, userForm.getEmail(),
                     subject, message);
-            logger.info("Email sent.");
+            logger.info("Email sent on address: " + userForm.getEmail());
         } catch (Exception ex) {
             logger.info("Failed to sent email.");
             ex.printStackTrace();

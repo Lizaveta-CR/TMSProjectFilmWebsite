@@ -32,12 +32,12 @@
             document.getElementById("logoutForm").submit();
         }
     </script>
-
     <c:if test="${pageContext.request.userPrincipal.name != null}">
         <h2 style="color:blue;">
             <spring:message code="lbl.welcome"/>, ${pageContext.request.userPrincipal.name} | <a
                 href="javascript:formSubmit()"> <spring:message code="lbl.logout"/></a>
         </h2>
+        <a href="/deleteAccount"><spring:message code="lbl.deleteAccount"/></a>
     </c:if>
 </security:authorize>
 <security:authorize access="hasRole('ROLE_USER')">
