@@ -162,6 +162,10 @@ public class LoginRegisterController {
         if (code.equals(userPassCode)) {
             try {
                 UserEntity user = userService.findByEmail(email);
+                if (user.isEnabled() == false) {
+                    user.setEnabled(true);
+                    userService.update(user);
+                }
                 securityService.autoLogin(user.getUsername(), user.getPassword());
                 return "redirect:/";
             } catch (NullPointerException e) {
@@ -171,6 +175,17 @@ public class LoginRegisterController {
             model.addAttribute("errorMessage", "WRONG!");
             return "errors/emailError";
         }
+    }
+
+    @GetMapping("/retainAccount")
+    public String retainAccountPage(Model model) {
+        model.addAttribute("email", new UserEntity());
+        return "retainAccount";
+    }
+
+    @PostMapping("/retainAccount")
+    public String retainAccount(@ModelAttribute("email") UserEntity userEntity, Model model) {
+        return forgotPassEmail(userEntity, model);
     }
 
     @GetMapping("/403")

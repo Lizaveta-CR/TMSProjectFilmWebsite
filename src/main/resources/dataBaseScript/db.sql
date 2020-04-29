@@ -22,7 +22,7 @@ CREATE TABLE user_roles
 CREATE TABLE films
 (
     film_id     int(11)     NOT NULL AUTO_INCREMENT,
-    link        varchar(60) NOT NULL,
+    link        varchar(100) NOT NULL,
     name        varchar(60) NOT NULL,
     year        varchar(10) NOT NULL,
     quality     varchar(30) NOT NULL,
@@ -66,13 +66,12 @@ VALUES ('liza', 'ROLE_USER');
 INSERT INTO user_roles (username, role)
 VALUES ('liza', 'ROLE_ADMIN');
 
-# ALTER TABLE orders
-#     AUTO_INCREMENT = 1;
-#  drop table user_roles
 
-#  drop table users;
+--   drop table user_roles
 
-#  drop table films;
+--   drop table users;
+
+#   drop table films;
 
 #  drop table order_item;
 

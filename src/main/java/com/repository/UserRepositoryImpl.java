@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 @Transactional
@@ -25,6 +22,9 @@ public class UserRepositoryImpl implements UserRepository {
     private static final Logger logger = LogManager.getLogger(UserRepositoryImpl.class);
     @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     protected Session getSession() {
         return sessionFactory.getCurrentSession();
@@ -141,14 +141,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void deleteUser(UserEntity user) {
-        for (UserRole userRole : user.getUserRole()) {
-            user.removeRole(userRole);
-            getSession().delete(userRole);
-        }
-        for (OrderEntity order : user.getOrders()) {
-            user.removeOrder(order);
-            getSession().delete(order);
-        }
-        getSession().delete(user);
+        user.setEnabled(false);
+        update(user);
     }
 }
