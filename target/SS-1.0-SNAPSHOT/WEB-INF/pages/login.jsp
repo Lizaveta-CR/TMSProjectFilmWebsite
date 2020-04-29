@@ -74,7 +74,8 @@
                                        value="<spring:message code="lbl.submit"/>"/></td>
             </tr>
             <a href="/forgotPass"><spring:message code="lbl.forgotPass"/></a>
-            <a href="/registration"><spring:message code="lbl.helloRegister"/>
+            <a href="/registration"><spring:message code="lbl.helloRegister"/></a>
+            <a href="/retainAccount"> <spring:message code="lbl.retainAccount"/></a>
         </table>
         <input type="hidden" name="${_csrf.parameterName}"
                value="${_csrf.token}"/>
