@@ -101,13 +101,13 @@ public class LoginRegisterController {
 
     @GetMapping("/forgotPass")
     public String forgotPassPage() {
-        return "forgotPassChoice";
+        return "recovery/forgotPassChoice";
     }
 
     @GetMapping("/forgotPassMobile")
     public String forgotPassPageMobile(Model model) {
         model.addAttribute("mobile", new UserEntity());
-        return "forgotPassMobile";
+        return "recovery/forgotPassMobile";
     }
 
     @PostMapping("/forgotPassMobile")
@@ -129,7 +129,7 @@ public class LoginRegisterController {
     @GetMapping("/forgotPassEmail")
     public String forgotPassPageEmail(Model model) {
         model.addAttribute("email", new UserEntity());
-        return "forgotPassEmail";
+        return "recovery/forgotPassEmail";
     }
 
     @PostMapping("/forgotPassEmail")
@@ -151,7 +151,7 @@ public class LoginRegisterController {
             }
             model.addAttribute("email", email);
             model.addAttribute("userPassCode", userPassCode);
-            return "emailConfirmationPass";
+            return "recovery/emailConfirmationPass";
         } else {
             return "errors/emailError";
         }
@@ -180,7 +180,7 @@ public class LoginRegisterController {
     @GetMapping("/retainAccount")
     public String retainAccountPage(Model model) {
         model.addAttribute("email", new UserEntity());
-        return "retainAccount";
+        return "recovery/retainAccount";
     }
 
     @PostMapping("/retainAccount")

@@ -145,6 +145,6 @@ public class MainController {
     public String deleteAccount(Authentication authentication) {
         UserEntity userEntity = userService.findByUsername(authentication.getName());
         userService.deleteUser(userEntity);
-        return "noAccount";
+        return "recovery/noAccount";
     }
 }

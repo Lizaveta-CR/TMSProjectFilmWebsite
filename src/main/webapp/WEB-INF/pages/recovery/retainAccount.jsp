@@ -16,7 +16,7 @@
 <form:form method="POST" modelAttribute="email">
     <td><spring:message code="lbl.email"/>:</td>
     <td><input type='text' name='email'></td>
-    <input name="<spring:message code="lbl.submit"/>" type="submit" value="submit"/></td>
+    <input name="submit" type="submit" value="<spring:message code="lbl.submit"/>"/>
 </form:form>
 <a href="/login"><spring:message code="lbl.exit"/></a>
 </body>

@@ -69,7 +69,7 @@ VALUES ('liza', 'ROLE_ADMIN');
 
 --   drop table user_roles
 
---   drop table users;
+#   drop table users;
 
 #   drop table films;
 

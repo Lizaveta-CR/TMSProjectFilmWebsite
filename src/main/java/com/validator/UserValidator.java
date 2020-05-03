@@ -25,8 +25,8 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         UserEntity user = (UserEntity) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-        if (containsSpecialChars(user.getUsername()) || containsDigits(user.getUsername())) {
-            errors.rejectValue("username", "Username.English.Only");
+        if (!containsSpecialChars(user.getUsername()) || containsDigits(user.getUsername())) {
+            errors.rejectValue("username", "Username.Symbols.Only");
         }
 
         if (user.getUsername().length() < 3 || user.getUsername().length() > 32) {
@@ -61,7 +61,7 @@ public class UserValidator implements Validator {
     }
 
     private boolean containsSpecialChars(String string) {
-        Pattern pSymbols = Pattern.compile("\\W");
+        Pattern pSymbols = Pattern.compile("/[$-/:-?{-~!\"^_`\\[\\]]/");
         Matcher mSymbols = pSymbols.matcher(string);
         return mSymbols.find();
     }

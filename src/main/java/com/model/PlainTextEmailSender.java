@@ -31,34 +31,12 @@ public class PlainTextEmailSender {
         Message msg = new MimeMessage(session);
 
         msg.setFrom(new InternetAddress(userName));
-        InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
+        InternetAddress[] toAddresses = {new InternetAddress(toAddress)};
         msg.setRecipients(Message.RecipientType.TO, toAddresses);
         msg.setSubject(subject);
         msg.setSentDate(new Date());
         msg.setText(message);
 
         Transport.send(msg);
-
     }
-//    public static void main(String[] args) {
-//        String host = "smtp.gmail.com";
-//        String port = "587";
-//        String mailFrom = "elizaveta.tsvirko@gmail.com";
-//        String password = "690337932";
-//
-//        String mailTo = "galina_giala@mail.ru";
-//        String subject = "Hello my friend";
-//        String message = "Hi guy, Hope you are doing well. Liza.";
-//
-//        PlainTextEmailSender mailer = new PlainTextEmailSender();
-//
-//        try {
-//            mailer.sendPlainTextEmail(host, port, mailFrom, password, mailTo,
-//                    subject, message);
-//            System.out.println("Email sent.");
-//        } catch (Exception ex) {
-//            System.out.println("Failed to sent email.");
-//            ex.printStackTrace();
-//        }
-//    }
 }

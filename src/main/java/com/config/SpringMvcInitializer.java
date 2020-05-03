@@ -1,10 +1,6 @@
 package com.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import javax.servlet.Filter;
 
 public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -15,20 +11,11 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{WebConfig.class};
+        return new Class[]{CustomWebMvcConfigurationSupport.class};
     }
 
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
-    }
-
-    @Override
-    @Bean
-    protected Filter[] getServletFilters() {
-        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
-        characterEncodingFilter.setForceEncoding(true);
-        return new Filter[]{characterEncodingFilter};
     }
 }

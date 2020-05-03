@@ -11,7 +11,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,7 +68,8 @@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="lbl.submit"/></button>
     </form:form>
-    ${helloMessage}
+    <spring:message code="hello.message"/>
+<%--    ${helloMessage}--%>
     <p><a href="/login"><spring:message code="lbl.helloLogin"/></a></p>
 </div>
 </body>

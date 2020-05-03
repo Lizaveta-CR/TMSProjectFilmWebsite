@@ -38,6 +38,7 @@
                 href="javascript:formSubmit()"> <spring:message code="lbl.logout"/></a>
         </h2>
         <a href="/deleteAccount"><spring:message code="lbl.deleteAccount"/></a>
+        <a href="/changePass"><spring:message code="lbl.ChangepasswordTitle"/></a>
     </c:if>
 </security:authorize>
 <security:authorize access="hasRole('ROLE_USER')">
