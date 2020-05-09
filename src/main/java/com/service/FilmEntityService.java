@@ -12,7 +12,7 @@ public interface FilmEntityService {
 
     FilmEntity getFilmByFilmName(String name);
 
-    void saveFilms(List<Film> films, String language) throws Exception;
+    void saveFilms(List<Film> films) throws Exception;
 
     void save(FilmEntity filmEntity);
 

@@ -39,12 +39,10 @@ public class AdminController {
     UserService userService;
 
     @GetMapping("/getFilmsFromSite")
-    public String getReloadPage(@RequestParam String filmNum, HttpServletRequest httpServletRequest) throws Exception {
-        Locale locale = httpServletRequest.getLocale();
-        String language = locale.getLanguage();
+    public String getReloadPage(@RequestParam String filmNum) throws Exception {
         try {
             List<Film> parse = filmService.parse(Integer.parseInt(filmNum));
-            filmService.saveFilms(parse, language);
+            filmService.saveFilms(parse);
             return "redirect:/admin";
         } catch (NumberFormatException e) {
             return "errors/numberFormatException";

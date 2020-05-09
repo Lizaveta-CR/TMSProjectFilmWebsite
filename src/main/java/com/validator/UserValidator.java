@@ -25,7 +25,7 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         UserEntity user = (UserEntity) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-        if (!containsSpecialChars(user.getUsername()) || containsDigits(user.getUsername())) {
+        if (containsSpecialChars(user.getUsername()) || containsDigits(user.getUsername())) {
             errors.rejectValue("username", "Username.Symbols.Only");
         }
 

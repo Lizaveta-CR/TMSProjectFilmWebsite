@@ -21,7 +21,7 @@ public class FilmPriceValidator implements Validator {
     public void validate(Object o, Errors errors) {
         FilmEntity film = (FilmEntity) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "NotEmpty");
-        if (!priceRegex(film.getPrice())) {//надо еще подумать
+        if (!priceRegex(film.getPrice())) {
             errors.rejectValue("price", "FilmForm.correct.numbers");
         } else {
             if (film.getPrice().contains(",")) {

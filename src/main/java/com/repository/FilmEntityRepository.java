@@ -13,7 +13,7 @@ public interface FilmEntityRepository {
 
     FilmEntity getFilmByFilmName(String name);
 
-    FilmEntity saveFilms(FilmEntity films, String language) throws Exception;
+    FilmEntity saveFilms(FilmEntity films) throws Exception;
 
     PaginationResult<FilmEntity> getAll(int page, int maxResult, int maxNavigationPage);
 

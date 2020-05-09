@@ -66,7 +66,7 @@ public class FilmEntityRepositoryImpl implements FilmEntityRepository {
     }
 
     @Override
-    public FilmEntity saveFilms(FilmEntity film, String language) throws Exception {
+    public FilmEntity saveFilms(FilmEntity film) throws Exception {
         if (getFilmByFilmName(film.getName()) == null) {
             double min = 0.0;
             double max = 2.10;

@@ -25,9 +25,7 @@ public class LoginRegisterController {
     private static final Logger logger = LogManager.getLogger(LoginRegisterController.class);
     private final String host = "smtp.gmail.com";
     private final String port = "587";
-    private final String mailFrom = "filmwebsitejava@gmail.com";
-    private final String password = "FilmWebsiteJava2020";
-    private String userPassCode = null;
+    private String userPassCode;
 
     @Autowired
     private UserService userService;
@@ -64,7 +62,7 @@ public class LoginRegisterController {
         PlainTextEmailSender mailer = new PlainTextEmailSender();
 
         try {
-            mailer.sendPlainTextEmail(host, port, mailFrom, password, userForm.getEmail(),
+            mailer.sendPlainTextEmail(host, port,"filmwebsitejava@gmail.com", "FilmWebsiteJava2020", userForm.getEmail(),
                     subject, message);
             logger.info("Email sent on address: " + userForm.getEmail());
         } catch (Exception ex) {
@@ -142,7 +140,7 @@ public class LoginRegisterController {
             try {
                 PlainTextEmailSender mailer = new PlainTextEmailSender();
                 String subject = "Let's update your password!";
-                mailer.sendPlainTextEmail(host, port, mailFrom, password, email,
+                mailer.sendPlainTextEmail(host, port, "filmwebsitejava@gmail.com", "FilmWebsiteJava2020", email,
                         subject, userPassCode);
                 logger.info("Email sent.");
             } catch (Exception ex) {

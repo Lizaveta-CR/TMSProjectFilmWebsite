@@ -58,7 +58,6 @@ public class CustomWebMvcConfigurationSupport extends WebMvcConfigurationSupport
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:i18n/messages");
         messageSource.setDefaultEncoding("UTF-8");
-        logger.info("inside messageSource");
         return messageSource;
     }
 
@@ -68,7 +67,6 @@ public class CustomWebMvcConfigurationSupport extends WebMvcConfigurationSupport
         localeResolver.setDefaultLocale(Locale.ENGLISH);
         localeResolver.setCookieName("my-locale-cookie");
         localeResolver.setCookieMaxAge(3600);
-        logger.info("inside localeResolver");
         return localeResolver;
     }
 
@@ -76,7 +74,6 @@ public class CustomWebMvcConfigurationSupport extends WebMvcConfigurationSupport
     public LocaleChangeInterceptor localeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         interceptor.setParamName("lang");
-        logger.info("inside LocaleChangeInterceptor");
         return interceptor;
     }
 

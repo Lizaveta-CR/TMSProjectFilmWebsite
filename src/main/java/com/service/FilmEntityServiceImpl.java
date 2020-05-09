@@ -30,9 +30,9 @@ public class FilmEntityServiceImpl implements FilmEntityService {
 
 
     @Override
-    public void saveFilms(List<Film> films, String language) throws Exception {
+    public void saveFilms(List<Film> films) throws Exception {
         for (Film film : films) {
-            mapper.toDto(filmEntityRepository.saveFilms(mapper.toEntity(film), language));
+            mapper.toDto(filmEntityRepository.saveFilms(mapper.toEntity(film)));
         }
     }
 
